@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Niche Platform Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Figtree:ital,wght@0,400..800;1,400..800&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/niche.css">
+<link rel="stylesheet" href="css/site-home.css">
+<link rel="stylesheet" href="css/site-marketing.css">
+<link rel="stylesheet" href="css/site-content.css">
+<link rel="stylesheet" href="css/trader.css">
+<link rel="stylesheet" href="css/organiser.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/brand.css">
+<link rel="stylesheet" href="css/palettes.css">
+
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="proto" role="navigation" aria-label="Prototype navigation">
+  <span class="proto-label"><i></i>Niche prototype</span>
+  <div class="proto-tabs">
+    <button type="button" data-go="site/home" data-proto="site">Website</button>
+    <button type="button" data-go="trader/dashboard" data-proto="trader">Trader</button>
+    <button type="button" data-go="org/dashboard" data-proto="org">Organiser</button>
+    <button type="button" data-go="admin/dashboard" data-proto="admin">Admin</button>
+    <button type="button" data-go="brand/guidelines" data-proto="brand">Brand guidelines</button>
+  </div>
+  <div class="proto-tools">
+    <button type="button" id="palBtn" data-act="pal_toggle"><span class="pal-dots" aria-hidden="true"></span><span class="pl">Colours</span></button>
+    <button type="button" id="mapBtn"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span class="pl">All pages</span></button>
+    <button type="button" id="notesBtn" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg><span class="pl">Design notes</span></button>
+    <button type="button" id="themeBtn" aria-label="Switch between light and dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+  </div>
+</div>
+
+<div id="root"></div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Details" tabindex="-1"></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Dialog" tabindex="-1"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="tip" id="tip" role="tooltip" hidden></div>
+
+<script src="js/core.js"></script>
+<script src="js/site-home.js"></script>
+<script src="js/site-marketing.js"></script>
+<script src="js/site-content.js"></script>
+<script src="js/trader.js"></script>
+<script src="js/organiser.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/palettes.js"></script>
+<script>N.boot();</script>
+
+</body>
+</html>

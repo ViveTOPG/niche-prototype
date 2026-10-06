@@ -180,6 +180,25 @@ html.lenis,html.lenis body{height:auto}
 .rc-food{text-align:center;font-size:13px;opacity:.75;margin-top:4px}
 .rc-chip{align-self:center;margin-top:12px;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;background:color-mix(in srgb,currentColor 12%,transparent);font-size:12.5px;font-weight:700}
 .rc-chip .ic{width:14px;height:14px}
+/* demo photos on event cards (trader world) */
+.rc-ev.has-img .rc-in{background:#0B2C20;color:#F4F3EE;padding:18px}
+.rc-ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none;transition:transform .9s var(--ease)}
+.rc-ev.has-img .rc-in::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,22,15,.42) 0%,rgba(6,22,15,0) 26%,rgba(6,22,15,.08) 46%,rgba(6,22,15,.9) 100%)}
+.rc-ev.has-img .rc-meta,.rc-bot{position:relative;z-index:1}
+.rc-ev.has-img .rc-meta{opacity:1}
+.rc-ev.has-img .rc-meta span{padding:5px 9px;border-radius:999px;background:rgba(6,22,15,.5);color:#F4F3EE}
+.rc-bot{margin-top:auto;display:flex;flex-direction:column}
+.rc-ev.has-img .rc-num{color:#A3D55F;font-size:calc(var(--cw) * .34)}
+.rc-ev.has-img .rc-cap{opacity:.85;margin:4px 0 10px}
+.rc:hover .rc-ph,.rc:focus-visible .rc-ph{transform:scale(1.06)}
+/* demo logos on trader cards (organiser world) */
+.rc-logo{align-self:center;margin:auto 0 16px;width:calc(var(--cw) * .5);aspect-ratio:1;border-radius:calc(var(--cw) * .075);overflow:hidden;box-shadow:0 18px 40px -18px rgba(0,0,0,.55);transition:transform .6s var(--ease)}
+.rc-logo img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
+.rc:hover .rc-logo,.rc:focus-visible .rc-logo{transform:scale(1.05) rotate(-2deg)}
+.rc-pass{align-self:stretch;display:grid;justify-items:center;gap:10px;margin-top:14px}
+.rc-bar{width:70%;height:4px;border-radius:9px;background:color-mix(in srgb,currentColor 18%,transparent);overflow:hidden}
+.rc-bar i{display:block;height:100%;width:calc(var(--p) * 1%);background:currentColor;border-radius:inherit}
+.rc-pass .rc-chip{margin-top:0}
 .lp-ring-foot{display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 16px}
 .lp-ring-lab{margin:0;min-height:52px;text-align:center;display:grid;gap:2px}
 .lp-ring-lab b{font-family:var(--f-display);font-weight:700;font-variation-settings:"SOFT" 100;font-size:22px;letter-spacing:-.02em}

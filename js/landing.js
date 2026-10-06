@@ -37,19 +37,27 @@ const EVENTS = () => Object.entries(db.events).filter(([, e]) => e.status === 'p
 const TRADERS = () => Object.entries(db.traders).filter(([, t]) => t.status === 'approved' && (t.score || 0) >= 85).map(([id, t]) => ({ id, ...t }));
 const fill = (list, min) => { const out = []; while (out.length < min) out.push(...list); return out; };
 
-const evCard = (e, i) => {
-  const open = Math.max(0, e.pitches - e.filled);
-  return `<button type="button" class="rc rc-ev v${i % 5}" data-go="site/events/${e.id}" data-label="${esc(e.name)}" data-sub="${esc(e.city)} · ${N.fd(e.date, { weekday: 'short', day: 'numeric', month: 'short' })}" aria-label="${esc(e.name)}, ${esc(e.city)}: ${open} pitches open"><span class="rc-in">
-    <span class="rc-aw" aria-hidden="true"></span>
+/* demo images from the live NICHE demo (niche-demo-backend …/static/demo): each event's first and second photo, each trader's logo */
+const EVENT_IMG = { camden: ['night-festival', 'farmers-market'], manchester: ['food-truck-rodeo', 'market-stalls-1'], bristol: ['street-food-plaza', 'paella-pan'], brighton: ['food-festival-green', 'night-festival'], york: ['market-stalls-2', 'food-truck-rodeo'], leeds: ['festival-tents', 'street-food-plaza'], birmingham: ['food-truck-row', 'farmers-market'], cotswolds: ['farmers-market', 'market-stalls-2'], cardiff: ['market-stalls-1', 'festival-tents'] };
+const TRADER_LOGO = { mw: 'masala-wheels', gs: 'gelato-sofia', st: 'smokehouse-tom', tb: 'tokyo-bites', gb: 'green-bowl', pp: 'pizza-pilot', cs: 'chai-and-samosa', cr: 'crepe-station', wo: 'wild-oats-bakery', fs: 'falafel-street', bb: 'burger-barn', bs: 'bob-spice-kitchen' };
+const evImg = (id, i, n) => { const set = EVENT_IMG[id]; return set ? `assets/demo/events/${set[Math.floor(i / n) % set.length]}.jpg` : ''; };
+
+const evCard = (e, i, all) => {
+  const open = Math.max(0, e.pitches - e.filled), img = evImg(e.id, i, new Set(all.map(x => x.id)).size);
+  return `<button type="button" class="rc rc-ev v${i % 5}${img ? ' has-img' : ''}" data-go="site/events/${e.id}" data-label="${esc(e.name)}" data-sub="${esc(e.city)} · ${N.fd(e.date, { weekday: 'short', day: 'numeric', month: 'short' })}" aria-label="${esc(e.name)}, ${esc(e.city)}: ${open} pitches open"><span class="rc-in">
+    ${img ? `<img class="rc-ph" src="${img}" alt="" decoding="async" draggable="false">` : '<span class="rc-aw" aria-hidden="true"></span>'}
     <span class="rc-meta"><span>${dd(e.date)}</span><span>${esc(e.city)}</span></span>
-    <span class="rc-num">${open}</span><span class="rc-cap">pitches open</span>
-    <span class="rc-name">${esc(e.name)}</span></span></button>`;
+    <span class="rc-bot"><span class="rc-num">${open}</span><span class="rc-cap">pitches open</span>
+    <span class="rc-name">${esc(e.name)}</span></span></span></button>`;
 };
-const trCard = (t, i) => `<button type="button" class="rc rc-tr v${i % 5}" data-go="site/traders/${t.id}" data-label="${esc(t.biz)}" data-sub="${esc(t.food)} · ${esc(t.city)}" aria-label="${esc(t.biz)}, ${esc(t.food)}: passport ${t.score}% complete"><span class="rc-in">
+const trCard = (t, i) => {
+  const logo = TRADER_LOGO[t.id];
+  return `<button type="button" class="rc rc-tr v${i % 5}" data-go="site/traders/${t.id}" data-label="${esc(t.biz)}" data-sub="${esc(t.food)} · ${esc(t.city)}" aria-label="${esc(t.biz)}, ${esc(t.food)}: passport ${t.score}% complete"><span class="rc-in">
     <span class="rc-meta"><span>${esc(t.city)}</span><span>Since ${t.since}</span></span>
-    <span class="rc-mono" style="--p:${t.score}"><b>${ini(t.biz)}</b></span>
+    ${logo ? `<span class="rc-logo"><img src="assets/demo/logos/${logo}.svg" alt="" decoding="async" draggable="false"></span>` : `<span class="rc-mono" style="--p:${t.score}"><b>${ini(t.biz)}</b></span>`}
     <span class="rc-name">${esc(t.biz)}</span><span class="rc-food">${esc(t.food)}</span>
-    <span class="rc-chip">${ic('check')}Passport ${t.score}%</span></span></button>`;
+    <span class="rc-pass" style="--p:${t.score}"><span class="rc-bar"><i></i></span><span class="rc-chip">${ic('check')}Passport ${t.score}%</span></span></span></button>`;
+};
 
 /* ---------- step visuals (CSS-animated when the step card gets .play) ---------- */
 const VZ = {

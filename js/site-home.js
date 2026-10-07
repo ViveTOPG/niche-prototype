@@ -156,7 +156,7 @@ function preview() {
       <div class="browser rv" data-note="The dashboard preview is live: search, switch tabs and invite traders. It uses the same data as the organiser app.">
         <div class="browser-bar"><i></i><i></i><i></i><span class="url">${ic('lock', 'ic-sm')}nicheconnect.co/organiser/events/camden/eligible</span></div>
         <div class="browser-body">
-          <div class="row between"><div class="stack" style="--g:2px"><b style="font-family:var(--f-display);font-size:24px;font-weight:800">Eligible traders</b><span class="small muted">${elig.length} traders fit ${esc(e.name)}</span></div>${N.tabsHTML([['eligible', 'Eligible', elig.filter(i => !H.invited[i]).length], ['invited', 'Invited', elig.filter(i => H.invited[i]).length]], H.elTab, 'data-hm-tab')}</div>
+          <div class="row between"><div class="stack" style="--g:2px"><b style="font-family:var(--f-display);font-size:24px;font-weight:var(--w-display)">Eligible traders</b><span class="small muted">${elig.length} traders fit ${esc(e.name)}</span></div>${N.tabsHTML([['eligible', 'Eligible', elig.filter(i => !H.invited[i]).length], ['invited', 'Invited', elig.filter(i => H.invited[i]).length]], H.elTab, 'data-hm-tab')}</div>
           <label class="search">${ic('search')}<input type="search" placeholder="Search traders by name, company or email..." data-input="hm_elq" value="${esc(H.elQ)}" aria-label="Search traders"></label>
           <div class="stack" id="hmEl" style="--g:8px">${elList(list)}</div>
         </div>

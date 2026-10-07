@@ -121,7 +121,7 @@
 .adm-libtn{text-align:left;border-radius:10px;padding:2px 4px;margin:-2px -4px;min-width:0}
 .adm-libtn:hover b{text-decoration:underline;text-underline-offset:3px}
 .adm-days{width:48px;height:54px;border-radius:999px 999px 12px 12px;background:var(--sunk);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:4px;line-height:1.05}
-.adm-days b{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:21px;letter-spacing:-.02em;color:var(--ink);text-transform:none}
+.adm-days b{font-family:var(--f-display);font-weight:var(--w-display);font-size:21px;letter-spacing:-.02em;color:var(--ink);text-transform:none}
 .adm-days.warn{background:var(--warn-bg);color:var(--warn)}.adm-days.warn b{color:var(--warn)}
 .adm-days.risk{background:var(--risk-bg);color:var(--risk)}.adm-days.risk b{color:var(--risk)}
 .adm-headline{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
@@ -154,7 +154,7 @@
 
 /* ---------- notifications ---------- */
 .adm-silent{display:flex;align-items:center;gap:16px;padding:20px 22px;border-radius:var(--r-lg);background:var(--mint);color:var(--mint-ink)}
-.adm-silent b{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:22px;letter-spacing:-.02em}
+.adm-silent b{font-family:var(--f-display);font-weight:var(--w-display);font-size:22px;letter-spacing:-.02em}
 .adm-silent p{font-size:14px;opacity:.85;margin-top:2px}
 .adm-silent .adm-archic{background:var(--surface);color:var(--mint-ink)}
 .adm-note.is-unread .li-main b::after{content:"";display:inline-block;width:8px;height:9px;border-radius:999px 999px 2px 2px;background:var(--paprika);margin-left:8px;vertical-align:middle}
@@ -190,13 +190,13 @@
 .adm-paper-seal .ic{width:17px;height:17px}
 .adm-paper-b{display:flex;flex-direction:column;gap:8px;flex:1}
 .adm-paper-k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.adm-paper-v{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:22px;letter-spacing:-.02em;line-height:1.05;margin-bottom:4px}
+.adm-paper-v{font-family:var(--f-display);font-weight:var(--w-display);font-size:22px;letter-spacing:-.02em;line-height:1.05;margin-bottom:4px}
 .adm-paper-row{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:5px 0;border-bottom:1px dotted var(--line-2)}
 .adm-paper-row span{color:var(--muted)}
 .adm-paper-row b{text-align:right;overflow-wrap:anywhere}
 .adm-ln{display:block;height:6px;border-radius:4px;background:var(--sunk-2);margin-top:4px}
 .adm-paper-f{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;font-size:11px;color:var(--muted)}
-.adm-paper-sig{font-family:var(--f-display);font-style:italic;font-variation-settings:"SOFT" 100,"WONK" 1;font-size:20px;color:var(--ink-2);border-bottom:1px solid var(--line-2);padding:0 8px 2px}
+.adm-paper-sig{font-family:var(--f-display);font-style:italic;font-size:20px;color:var(--ink-2);border-bottom:1px solid var(--line-2);padding:0 8px 2px}
 
 /* ---------- units, figures, detail cards ---------- */
 .adm-unit{display:flex;flex-direction:column;gap:14px}
@@ -323,7 +323,7 @@
 .adm-pct span[aria-hidden]{font-family:var(--f-mono);color:var(--muted)}
 
 /* ---------- T & C ---------- */
-.adm-ver{width:46px;height:52px;border-radius:999px 999px 12px 12px;background:var(--sunk);display:flex;align-items:baseline;justify-content:center;padding-top:14px;font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:22px;color:var(--ink-2);flex:none}
+.adm-ver{width:46px;height:52px;border-radius:999px 999px 12px 12px;background:var(--sunk);display:flex;align-items:baseline;justify-content:center;padding-top:14px;font-family:var(--f-display);font-weight:var(--w-display);font-size:22px;color:var(--ink-2);flex:none}
 .adm-ver small{font-size:12px;margin-right:1px}
 .adm-ver.on{background:var(--side);color:var(--side-ink)}
 .adm-tnc .li-main span{white-space:normal}

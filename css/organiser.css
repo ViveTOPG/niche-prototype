@@ -146,7 +146,7 @@
 .org-file b{overflow-wrap:anywhere}
 .org-file span{font-size:12.5px;color:var(--muted)}
 .org-cert{position:relative;border:1.5px solid var(--line-2);border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;background:var(--sunk);overflow:hidden}
-.org-cert b{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:26px;letter-spacing:-.02em;line-height:1.05;overflow-wrap:anywhere}
+.org-cert b{font-family:var(--f-display);font-weight:var(--w-display);font-size:26px;letter-spacing:-.02em;line-height:1.05;overflow-wrap:anywhere}
 .org-cert-seal{position:absolute;right:18px;bottom:16px;width:64px;height:74px;border-radius:999px 999px 16px 16px;display:grid;place-items:center;background:var(--side);color:var(--side-ink);transform:rotate(-8deg)}
 
 /* ---------- notifications ---------- */
@@ -193,7 +193,7 @@
 .org-prev-b .ic-sm{vertical-align:-2px}
 .org-prev-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:4px 0}
 .org-prev-facts div{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;min-width:0}
-.org-prev-facts b{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:22px;letter-spacing:-.02em}
+.org-prev-facts b{font-family:var(--f-display);font-weight:var(--w-display);font-size:22px;letter-spacing:-.02em}
 .org-prev-facts span{font-size:12px;color:var(--muted)}
 .org-prev-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line)}
 

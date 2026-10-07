@@ -383,7 +383,7 @@ N.passportCard = (tid, opts = {}) => {
   const t = db.traders[tid], docs = N.docsOf(tid).filter(d => d.status !== 'missing');
   return `<article class="passport ${opts.cls || ''}">
     <header class="row between"><div class="stack" style="--g:2px">${N.wm('wm-sm on-dark')}<span class="eyebrow">Food Trader Passport</span></div><span class="mono muted">NCH-26-${String(100 + Object.keys(db.traders).indexOf(tid)).padStart(4, '0')}</span></header>
-    <div class="row" style="--g:14px">${N.tav(tid, 'lg')}<div class="stack" style="--g:2px"><b style="font-family:var(--f-display);font-weight:800;font-size:28px;letter-spacing:-.02em;line-height:1">${esc(t.display || t.biz)}</b><span class="muted small">${esc(t.person)} · ${esc(t.food)} · since ${t.since}</span></div></div>
+    <div class="row" style="--g:14px">${N.tav(tid, 'lg')}<div class="stack" style="--g:2px"><b style="font-family:var(--f-display);font-weight:var(--w-display);font-size:28px;letter-spacing:-.02em;line-height:1">${esc(t.display || t.biz)}</b><span class="muted small">${esc(t.person)} · ${esc(t.food)} · since ${t.since}</span></div></div>
     <div style="color:var(--on-hedge)">${N.fhrs(t.fhrs)}</div>
     <ul class="pp-docs">${docs.slice(0, opts.max || 5).map(d => { const st = N.docState(d); return `<li><span class="dot ${st === 'valid' ? 'ok' : st === 'expiring' ? 'warn' : st === 'pending' ? 'info' : 'risk'}"></span>${esc(N.docType(d.type).name)}<span class="mono">${st === 'pending' ? 'in review' : d.exp ? 'to ' + N.fShort(d.exp) + ' ' + N.fd(d.exp, { year: '2-digit' }) : 'no expiry'}</span></li>`; }).join('')}</ul>
     ${opts.stamp !== false ? `<div class="stamp ${opts.hit ? 'hit' : ''}" style="position:absolute;right:18px;bottom:18px;width:96px">${N.stamp('st-' + tid + (opts.sid || ''))}</div>` : ''}
@@ -665,10 +665,6 @@ N.sitemap = () => {
   N.openModal(`<div class="stack" style="--g:6px"><p class="eyebrow">Every screen in this prototype</p><h3>All pages</h3></div><div class="sitemap">${Object.entries(groups).map(([k, rs]) => `<div><h4>${names[k] || k}</h4>${rs.map(r => { const path = r.def.example || r.pattern; const t = typeof r.def.title === 'function' ? r.def.title(Object.fromEntries(r.keys.map((k2, i) => [k2, path.split('/')[r.pattern.split('/').indexOf(':' + k2)]]))) : r.def.title; return `<button type="button" data-go="${path}">${esc(t || path)}</button>`; }).join('')}</div>`).join('')}</div>`, 'wide');
 };
 
-/* ---------- theme ---------- */
-function isDark() { const t = document.documentElement.dataset.theme; return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
-function themeIcon() { const u = $('#themeBtn use'); if (u) u.setAttribute('href', isDark() ? '#i-sun' : '#i-moon'); }
-
 /* =====================================================================
    BOOT
    ===================================================================== */
@@ -677,10 +673,7 @@ N.boot = () => {
   drawer = $('#drawer'); scrim = $('#scrim'); modal = $('#modal'); tip = $('#tip');
   wire();
   $('#notesBtn').addEventListener('click', () => { N.notes = !N.notes; $('#notesBtn').setAttribute('aria-pressed', String(N.notes)); N.applyNotes(); if (N.notes) N.toast('Design notes on. Hover or tap a numbered arch.', { icon: 'info' }); });
-  $('#themeBtn').addEventListener('click', () => { document.documentElement.dataset.theme = isDark() ? 'light' : 'dark'; themeIcon(); });
   $('#mapBtn').addEventListener('click', N.sitemap);
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeIcon);
-  themeIcon();
   N.syncAlice();
   const start = (location.hash || '').slice(1).replace(/\./g, '/');
   N.cur.path = start && match(start) ? start : 'site/home';

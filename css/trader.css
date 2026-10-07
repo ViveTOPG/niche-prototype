@@ -52,7 +52,7 @@ body[data-app="trader"] .banner > .grow,body[data-app="trader"] .banner > span:n
 .tr-ready::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-radial-gradient(circle at 108% -12%,transparent 0 15px,var(--on-hedge-line) 15px 16px);opacity:.55}
 .tr-ready-main{display:flex;align-items:center;gap:clamp(16px,2.4vw,28px);flex-wrap:wrap}
 .tr-ready-main > .stack{flex:1;min-width:200px}
-.tr-ready-h{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.025em;line-height:1;text-wrap:balance}
+.tr-ready-h{font-family:var(--f-display);font-weight:var(--w-display);font-size:clamp(26px,2.6vw,36px);letter-spacing:-.025em;line-height:1;text-wrap:balance}
 .tr-counts{display:flex;flex-wrap:wrap;gap:8px}
 .tr-counts li{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--on-hedge-line);font-size:13px;color:var(--on-hedge-2)}
 .tr-counts b{font-family:var(--f-mono);font-weight:500;color:var(--on-hedge)}
@@ -95,7 +95,7 @@ body[data-app="trader"] .banner > .grow,body[data-app="trader"] .banner > span:n
 .tr-stat{width:100%;text-align:left;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
 .tr-stat:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--line-2)}
 .tr-stat .row .ic{color:var(--muted)}
-.stat .num.tr-numtxt{font-size:30px;padding-block:5px}
+.stat .num.tr-numtxt{font-size:clamp(22px,6.8vw,30px);padding-block:5px}
 .tr-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .tr-qt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px;border-radius:var(--r-lg);border:1px solid var(--line);background:var(--surface);text-align:left;transition:border-color .2s,transform .2s,box-shadow .2s;width:100%}
 .tr-qt:hover{border-color:var(--side-strong);transform:translateY(-2px);box-shadow:var(--shadow)}
@@ -309,7 +309,7 @@ body[data-app="trader"] .banner > .grow,body[data-app="trader"] .banner > span:n
 .tr-form{display:flex;flex-direction:column;gap:16px}
 .tr-form-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:2px}
 .tr-photo-row{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-.tr-photo{width:96px;height:112px;border-radius:999px 999px 20px 20px;background:var(--side);color:var(--side-ink);display:grid;place-items:center;overflow:hidden;flex:none;font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:32px;letter-spacing:-.02em}
+.tr-photo{width:96px;height:112px;border-radius:999px 999px 20px 20px;background:var(--side);color:var(--side-ink);display:grid;place-items:center;overflow:hidden;flex:none;font-family:var(--f-display);font-weight:var(--w-display);font-size:32px;letter-spacing:-.02em}
 .tr-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .tr-photo.lg{width:104px;height:120px;background:var(--zest);color:var(--on-accent)}
 .tr-filebtn{position:relative;overflow:hidden;cursor:pointer}
@@ -320,7 +320,7 @@ body[data-app="trader"] .banner > .grow,body[data-app="trader"] .banner > span:n
 .tr-fh input{position:absolute;opacity:0;width:1px;height:1px}
 .tr-fh span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line-2);font-family:var(--f-mono);font-size:14px;color:var(--ink-2);transition:all .2s cubic-bezier(.3,1.3,.5,1)}
 .tr-fh:hover span{border-color:var(--ink)}
-.tr-fh input:checked + span{width:48px;height:54px;border-radius:999px 999px 14px 14px;background:var(--zest);color:var(--on-accent);border-color:var(--zest);font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:24px}
+.tr-fh input:checked + span{width:48px;height:54px;border-radius:999px 999px 14px 14px;background:var(--zest);color:var(--on-accent);border-color:var(--zest);font-family:var(--f-display);font-weight:var(--w-display);font-size:24px}
 .tr-fh input:focus-visible + span{outline:2.5px solid var(--violet);outline-offset:2px}
 .tr-toggles{display:flex;flex-wrap:wrap;gap:8px}
 .tr-tog{height:36px;padding:0 14px 0 11px;border-radius:999px;border:1.5px solid var(--line-2);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;transition:background-color .15s,border-color .15s,color .15s}
@@ -350,7 +350,7 @@ body[data-app="trader"] .banner > .grow,body[data-app="trader"] .banner > span:n
 .tr-pp-cover .eyebrow,.tr-pp-cover .muted{color:var(--on-hedge-2)}
 .tr-pp-id{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
 .tr-pp-id > .stack{flex:1;min-width:220px}
-.tr-pp-name{font-family:var(--f-display);font-weight:800;font-variation-settings:"SOFT" 100;font-size:clamp(32px,4.2vw,52px);letter-spacing:-.03em;line-height:.95}
+.tr-pp-name{font-family:var(--f-display);font-weight:var(--w-display);font-size:clamp(32px,4.2vw,52px);letter-spacing:-.03em;line-height:1.04}
 .tr-pp-facts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13.5px;color:var(--on-hedge-2)}
 .tr-pp-facts li{display:inline-flex;align-items:center;gap:6px}
 .tr-pp-facts b{color:var(--on-hedge)}

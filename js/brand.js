@@ -24,53 +24,51 @@ const CH = [
 ];
 
 const CORE = [
-  { n: 'Hedge', hex: '#0E3B2E', tok: '--hedge', role: 'Primary dark. The passport, the footer, the Checked badge.' },
+  { n: 'Forest', hex: '#124734', tok: '--hedge', role: 'Primary dark, from the logo. The passport, the footer, the Checked badge.' },
   { n: 'Ink', hex: '#101A15', tok: '--ink', role: 'Text and primary buttons.' },
   { n: 'White', hex: '#FFFFFF', tok: '--bg · --surface', role: 'Pages, cards and forms.' },
   { n: 'Chalk', hex: '#F5F4F0', tok: '--sunk', role: 'Sunk surfaces and the app canvas.' },
   { n: 'Line', hex: '#E4E1DA', tok: '--line', role: 'Hairlines, dividers, card edges.' },
 ];
 const ACCENTS = [
-  { n: 'Violet', hex: '#5A31E4', tok: '--violet', role: 'Organiser side. Key actions on the marketing site.' },
-  { n: 'Zest', hex: '#DDF85E', tok: '--zest', role: 'Trader highlight. Accents on hedge only.' },
-  { n: 'Paprika', hex: '#FF5A36', tok: '--paprika', role: 'Warm food accent: stars, pins, small highlights. Never errors.' },
+  { n: 'Purple', hex: '#6A63C4', tok: '--violet', role: 'Organiser side. Key actions on the marketing site.' },
+  { n: 'Green', hex: '#6BC04B', tok: '--zest', role: 'Trader highlight and the main call to action.' },
+  { n: 'Logo purple', hex: '#948FCF', tok: '--paprika', role: 'The organiser dot. Stars, pins, small highlights. Never errors.' },
 ];
 const PASTELS = [
-  ['Mint', '#D5F2DF', '#0E5236', 'mint', 'Trader side'],
-  ['Lilac', '#E9E2FF', '#3D1DA0', 'lilac', 'Organiser side'],
-  ['Butter', '#FFF0A8', '#6B5300', 'butter', 'Admin side'],
-  ['Peach', '#FFD8C9', '#8C2B12', 'peach', 'Food moments, warmth'],
-  ['Sky', '#D8EAF8', '#0F4068', 'sky', 'Information, calm'],
+  ['Mint', '#E2F2DA', '#124734', 'mint', 'Trader side'],
+  ['Lilac', '#ECEAF8', '#463F96', 'lilac', 'Organiser side'],
+  ['Sage', '#EDF6DC', '#2F5E1C', 'butter', 'Admin side'],
+  ['Mist', '#E9E7F7', '#463F96', 'peach', 'Food moments, warmth'],
+  ['Fog', '#E4EEE8', '#124734', 'sky', 'Information, calm'],
 ];
 const SEMANTIC = [
-  ['Ready', 'ok', '#137443', '#DCF3E4', 'Valid, approved, all met'],
+  ['Ready', 'ok', '#2F7A22', '#E2F2DA', 'Valid, approved, all met'],
   ['Expiring', 'warn', '#9E5A00', '#FFEFCC', 'Due within 30 days, in review'],
   ['Missing', 'risk', '#C0321E', '#FFE2DB', 'Missing, expired, rejected'],
-  ['Info', 'info', '#3D1DA0', '#E9E2FF', 'Neutral news, pending'],
+  ['Info', 'info', '#463F96', '#ECEAF8', 'Neutral news, pending'],
 ];
 const PAIRS = [
   ['Ink on White', '#101A15', '#FFFFFF', 'Body text, headlines'],
   ['Ink on Chalk', '#101A15', '#F5F4F0', 'Text on sunk surfaces'],
   ['Muted on White', '#69726C', '#FFFFFF', 'Secondary text and hints'],
   ['White on Ink', '#FFFFFF', '#101A15', 'Primary buttons, toasts'],
-  ['On-hedge on Hedge', '#EEF6E9', '#0E3B2E', 'Passport, footer'],
-  ['Zest on Hedge', '#DDF85E', '#0E3B2E', 'Checked badge, highlights'],
-  ['White on Violet', '#FFFFFF', '#5A31E4', 'Organiser buttons'],
-  ['Violet on White', '#5A31E4', '#FFFFFF', 'Links'],
-  ['Ink on Zest', '#101A15', '#DDF85E', 'Zest buttons and chips'],
-  ['Mint ink on Mint', '#0E5236', '#D5F2DF', 'Trader side'],
-  ['Lilac ink on Lilac', '#3D1DA0', '#E9E2FF', 'Organiser side'],
-  ['Butter ink on Butter', '#6B5300', '#FFF0A8', 'Admin side'],
-  ['Peach ink on Peach', '#8C2B12', '#FFD8C9', 'Food moments'],
-  ['Sky ink on Sky', '#0F4068', '#D8EAF8', 'Information'],
-  ['Ready on its tint', '#137443', '#DCF3E4', 'Status: ready'],
+  ['On-forest on Forest', '#EEF6EA', '#124734', 'Passport, footer'],
+  ['Green on Forest', '#6BC04B', '#124734', 'Checked badge, highlights'],
+  ['White on Purple', '#FFFFFF', '#6A63C4', 'Organiser buttons'],
+  ['Purple on White', '#6A63C4', '#FFFFFF', 'Links'],
+  ['Ink on Green', '#101A15', '#6BC04B', 'Green buttons and chips'],
+  ['Mint ink on Mint', '#124734', '#E2F2DA', 'Trader side'],
+  ['Lilac ink on Lilac', '#463F96', '#ECEAF8', 'Organiser side'],
+  ['Sage ink on Sage', '#2F5E1C', '#EDF6DC', 'Admin side'],
+  ['Mist ink on Mist', '#463F96', '#E9E7F7', 'Food moments'],
+  ['Fog ink on Fog', '#124734', '#E4EEE8', 'Information'],
+  ['Ready on its tint', '#2F7A22', '#E2F2DA', 'Status: ready'],
   ['Expiring on its tint', '#9E5A00', '#FFEFCC', 'Status: expiring'],
   ['Missing on its tint', '#C0321E', '#FFE2DB', 'Status: missing'],
-  ['Paprika on White', '#FF5A36', '#FFFFFF', 'Stars and pins only, never text'],
-  ['Zest on White', '#DDF85E', '#FFFFFF', 'Never. Zest lives on hedge'],
+  ['Paprika on White', '#948FCF', '#FFFFFF', 'Stars and pins only, never text'],
+  ['Zest on White', '#6BC04B', '#FFFFFF', 'Never. Zest lives on hedge'],
 ];
-const DARK_BASE = [['Background', '--bg', '#0C120F'], ['Surface', '--surface', '#131B17'], ['Sunk', '--sunk', '#18221D'], ['Line', '--line', '#26322C'], ['Ink', '--ink', '#EDF2EE'], ['Muted', '--muted', '#8E9993'], ['Violet', '--violet', '#7352FF'], ['Hedge', '--hedge', '#0E3B2E'], ['Zest', '--zest', '#DDF85E']];
-const DARK_PAIRS = [['Mint', '#16382A', '#A6E6C0'], ['Lilac', '#251D4D', '#CFC3FF'], ['Butter', '#3A3212', '#F4DD7C'], ['Peach', '#40241A', '#FFBDA6'], ['Sky', '#142F45', '#AAD3F3'], ['Ready', '#12301F', '#5FD18F'], ['Expiring', '#35280F', '#F2B659'], ['Missing', '#3D1C16', '#FF8B78'], ['Info', '#251D4D', '#CFC3FF']];
 
 /* ---------- small building blocks ---------- */
 // brand-book wordmark: same construction as .wm, but its colours are variables so specimens can be fixed
@@ -180,9 +178,9 @@ const appIcon = (size = 96, cls = '') => `<span class="br-icon ${cls}" style="--
 function logo() {
   const versions = [
     ['On white', 'Full colour. Our default everywhere.', 'v-white'],
-    ['On hedge', 'Zest and light lilac dots, soft white letters.', 'v-hedge'],
+    ['On forest', 'Green and lavender dots, soft white letters.', 'v-hedge'],
     ['Mono ink', 'One-colour print, forms, rubber stamps.', 'v-ink'],
-    ['Mono white on violet', 'Organiser campaigns and merch.', 'v-violet'],
+    ['Mono white on purple', 'Organiser campaigns and merch.', 'v-violet'],
     ...PASTELS.map(([n, , , t]) => [`On ${n.toLowerCase()}`, `Mono, set in ${n.toLowerCase()} ink.`, `v-${t}`]),
   ];
   const misuse = [
@@ -206,9 +204,9 @@ function logo() {
         <span class="bwm br-story-wm" aria-hidden="true"><span class="l">n</span><span class="bi2">ı<i class="d t"><span class="lab">The trader</span></i><i class="d b"><span class="lab">The organiser</span></i></span><span class="r">che</span></span>
       </div>
       <ol class="br-story-key">
-        <li><button type="button" data-act="br_part" data-part="t"><span class="k t"></span><span><b>The trader</b><span>Green #5FBF3A. Growth and readiness. On dark it turns zest.</span></span></button></li>
+        <li><button type="button" data-act="br_part" data-part="t"><span class="k t"></span><span><b>The trader</b><span>Green #58A63B. Growth and readiness.</span></span></button></li>
         <li><button type="button" data-act="br_part" data-part="m"><span class="k m"></span><span><b>The match</b><span>The stem of the i. Nothing else in the mark carries meaning, so this does.</span></span></button></li>
-        <li><button type="button" data-act="br_part" data-part="b"><span class="k b"></span><span><b>The organiser</b><span>Lilac #9B8CF2, below the baseline: the ground an event stands on.</span></span></button></li>
+        <li><button type="button" data-act="br_part" data-part="b"><span class="k b"></span><span><b>The organiser</b><span>Purple #948FCF, below the baseline: the ground an event stands on.</span></span></button></li>
       </ol>
     </div>
     ${gap(72)}
@@ -230,10 +228,10 @@ function logo() {
       ${fig('Print: 20 mm wide', `<div class="br-min"><span class="br-min-w" data-minw="20mm">${bwm('tight')}</span><span class="br-min-rule" style="width:20mm"><b>20 mm</b></span></div>`, 'Business cards, stickers, labels.')}
     </div>
     ${gap(72)}
-    ${sub('Colour versions', 'Full colour on white or hedge. On pastels and violet, go mono so the dots never fight the ground.')}
+    ${sub('Colour versions', 'Full colour on white or forest. On tints and purple, go mono so the dots never fight the ground.')}
     <div class="br-versions">${versions.map(([n, d, cls]) => `<figure class="br-ver ${cls}"><div class="br-ver-v">${bwm()}</div><figcaption><b>${n}</b><span>${d}</span></figcaption></figure>`).join('')}</div>
     ${gap(72)}
-    ${sub('App icon and favicon', 'An arch holding the two dots, on hedge. It carries the idea of the wordmark when there is no room for letters.')}
+    ${sub('App icon and favicon', 'An arch holding the two dots, on forest. It carries the idea of the wordmark when there is no room for letters.')}
     <div class="br-icons-row">${sizes.map(([s, l, u, c]) => `<figure class="br-icon-fig">${appIcon(s, c || '')}<figcaption><b>${l}</b><span>${u}</span></figcaption></figure>`).join('')}
       <figure class="br-icon-fig br-tab-fig"><div class="br-tab">${appIcon(16, 'fav')}<span>NICHE · Find your fit</span>${ic('x', 'ic-sm')}</div><figcaption><b>In context</b><span>Browser tab</span></figcaption></figure>
     </div>
@@ -297,7 +295,7 @@ function archChapter() {
     ${gap(40)}
     <div class="br-awn-spec blk blk-sunk">
       <div class="br-awn-zoom" aria-hidden="true"><span class="br-awn-strip"></span><span class="br-dim d1"><b>26 px</b></span><span class="br-dim d2"><b>13 px scallop</b></span></div>
-      <div class="stack" style="--g:8px"><h4 class="h4">Awning rules</h4><p class="small ink-2">The stripe colour is the tone’s strong partner: hedge on mint, violet on lilac, paprika on butter and peach, sky ink on sky, zest on hedge. The awning covers the top third of a frame, never more.</p></div>
+      <div class="stack" style="--g:8px"><h4 class="h4">Awning rules</h4><p class="small ink-2">The stripe colour is the tone’s strong partner: forest on mint, purple on lilac, logo purple on sage and mist, forest on fog, green on forest. The awning covers the top third of a frame, never more.</p></div>
     </div>
     ${gap(56)}
     ${doDont(['Keep the top a true semicircle at every size.', 'Use one arch per idea: one person, one date, one promise.', 'Let photos fill the arch edge to edge.', 'Align a row of arches on a shared baseline.'], ['Squash the curve into an oval or a pointed gothic arch.', 'Flip it upside down or use it as a speech bubble.', 'Nest arches inside arches.', 'Run awning stripes behind text.'])}
@@ -314,15 +312,15 @@ const PICK = [...CORE, ...ACCENTS, ...PASTELS.flatMap(([n, bg, ink]) => [{ n, he
 const pairResult = (fg, bg) => { const r = ratio(fg, bg); return `<div class="br-pc-sample" style="background:${bg};color:${fg}"><span class="br-pc-big">Aa</span><span>Upload renewal before 21 Oct</span></div>
   <div class="br-pc-out"><span class="num">${r.toFixed(2)}<small>:1</small></span><div class="tags"><span class="br-pc-k">AA ${passChip(r, 4.5)}</span><span class="br-pc-k">AA large ${passChip(r, 3)}</span><span class="br-pc-k">AAA ${passChip(r, 7)}</span></div></div>`; };
 function colour() {
-  const seg = [['White', '#FFFFFF', 42], ['Chalk', '#F5F4F0', 18], ['Hedge', '#0E3B2E', 12], ['Ink', '#101A15', 8], ['Mint', '#D5F2DF', 3], ['Lilac', '#E9E2FF', 3], ['Butter', '#FFF0A8', 3], ['Peach', '#FFD8C9', 3], ['Sky', '#D8EAF8', 3], ['Violet', '#5A31E4', 2.5], ['Zest', '#DDF85E', 1.5], ['Paprika', '#FF5A36', 1]];
+  const seg = [['White', '#FFFFFF', 42], ['Chalk', '#F5F4F0', 18], ['Forest', '#124734', 12], ['Ink', '#101A15', 8], ['Mint', '#E2F2DA', 3], ['Lilac', '#ECEAF8', 3], ['Sage', '#EDF6DC', 3], ['Mist', '#E9E7F7', 3], ['Fog', '#E4EEE8', 3], ['Purple', '#6A63C4', 2.5], ['Green', '#6BC04B', 1.5], ['Logo purple', '#948FCF', 1]];
   const sides = [
-    ['trader', 'Trader', 'Mint + hedge', 'AG', 'Alice Green · AG Foods', ['Dashboard', 'My Passport', 'My Documents']],
-    ['org', 'Organiser', 'Lilac + violet', 'RE', 'Olivia Reed · Reed Events', ['Dashboard', 'Applications', 'Manage Events']],
-    ['admin', 'Admin', 'Butter + ink', 'SO', 'Sam Okafor · Niche team', ['Dashboard', 'Traders', 'Document Types']],
+    ['trader', 'Trader', 'Mint + forest', 'AG', 'Alice Green · AG Foods', ['Dashboard', 'My Passport', 'My Documents']],
+    ['org', 'Organiser', 'Lilac + purple', 'RE', 'Olivia Reed · Reed Events', ['Dashboard', 'Applications', 'Manage Events']],
+    ['admin', 'Admin', 'Sage + ink', 'SO', 'Sam Okafor · Niche team', ['Dashboard', 'Traders', 'Document Types']],
   ];
-  return chap('colour', '04', 'Daylight, hedgerows and a little <em>zest</em>', 'A calm, mostly white palette with a deep hedge green, soft pastels for each side of the product and three small accents. Click any swatch to copy its hex.', `
+  return chap('colour', '04', 'Two dots, one <em>palette</em>', 'Every colour comes from the logo: a deep forest green, the green and purple of the two dots, and soft tints of both for each side of the product. Click any swatch to copy its hex.', `
     ${sub('Core', 'The quiet majority of every screen and every page.')}
-    <div class="br-sws br-sws-core">${CORE.map(c => swatch(c, c.n === 'Hedge' || c.n === 'Ink' ? 'wide' : '')).join('')}</div>
+    <div class="br-sws br-sws-core">${CORE.map(c => swatch(c, c.n === 'Forest' || c.n === 'Ink' ? 'wide' : '')).join('')}</div>
     ${gap(40)}
     ${sub('Accents', 'Used sparingly, so they mean something when they appear.')}
     <div class="br-sws br-sws-acc">${ACCENTS.map(c => swatch(c)).join('')}</div>
@@ -342,13 +340,13 @@ function colour() {
       <div class="row" style="--g:8px">${N.chip('side', l + ' side')}<button type="button" class="btn btn-side btn-xs" data-act="br_toast" data-msg="${l} actions use the ${l.toLowerCase()} side colour.">Primary action</button></div>
     </div>`).join('')}</div>
     ${gap(72)}
-    ${sub('Semantic colours', 'Status is always shown with a word as well as a colour. Paprika is never used for errors.')}
+    ${sub('Semantic colours', 'Status is always shown with a word as well as a colour. Logo purple is never used for errors.')}
     <div class="br-sem">${SEMANTIC.map(([n, cls, fg, bg, use]) => `<div class="br-sem-c"><div class="br-sem-sw"><button type="button" style="background:${fg}" data-act="br_copy" data-v="${fg}" aria-label="Copy ${n} ${fg}"></button><button type="button" style="background:${bg}" data-act="br_copy" data-v="${bg}" aria-label="Copy ${n} tint ${bg}"></button></div>
       <div class="stack" style="--g:8px"><div class="row between"><b>${n}</b><span class="mono muted">--${cls}</span></div>${N.chip(cls, n)}<div class="banner ${cls}">${ic(cls === 'ok' ? 'check-circle' : cls === 'warn' ? 'clock' : cls === 'risk' ? 'alert' : 'info')}<span class="small">${use}</span></div><span class="mono muted">${fg} on ${bg}</span></div></div>`).join('')}</div>
     ${gap(72)}
-    ${sub('Proportion', 'Roughly 60% white and chalk, 20% hedge and ink, 15% pastels, 5% accents. If a screen feels loud, it has too much of the last two.')}
-    <div class="br-prop" role="img" aria-label="Colour proportion: 60% white and chalk, 20% hedge and ink, 15% pastels, 5% accents">${seg.map(([n, h, w]) => `<span style="flex-basis:${w}%;background:${h}" title="${n}"></span>`).join('')}</div>
-    <div class="br-prop-l"><span style="flex-basis:60%"><b>60%</b> White, chalk</span><span style="flex-basis:20%"><b>20%</b> Hedge, ink</span><span style="flex-basis:15%"><b>15%</b> Pastels</span><span style="flex-basis:5%"><b>5%</b></span></div>
+    ${sub('Proportion', 'Roughly 60% white and chalk, 20% forest and ink, 15% tints, 5% accents. If a screen feels loud, it has too much of the last two.')}
+    <div class="br-prop" role="img" aria-label="Colour proportion: 60% white and chalk, 20% forest and ink, 15% tints, 5% accents">${seg.map(([n, h, w]) => `<span style="flex-basis:${w}%;background:${h}" title="${n}"></span>`).join('')}</div>
+    <div class="br-prop-l"><span style="flex-basis:60%"><b>60%</b> White, chalk</span><span style="flex-basis:20%"><b>20%</b> Forest, ink</span><span style="flex-basis:15%"><b>15%</b> Tints</span><span style="flex-basis:5%"><b>5%</b></span></div>
     ${gap(72)}
     ${sub('Accessible pairings', 'Contrast ratios below are calculated live from the hex values with the WCAG 2.2 formula. Body text needs AA (4.5:1). Text over 24 px, or 19 px bold, needs 3:1.')}
     <div class="tbl-wrap br-a11y"><table class="tbl"><thead><tr><th>Sample</th><th>Pairing</th><th>Ratio</th><th>AA</th><th>AA large</th><th>AAA</th><th>Use</th></tr></thead><tbody>${PAIRS.map(([n, fg, bg, use]) => { const r = ratio(fg, bg); return `<tr><td><span class="br-a11y-s" style="background:${bg};color:${fg}">Aa</span></td><td><b>${n}</b><span class="mono muted br-a11y-hex">${fg} / ${bg}</span></td><td class="mono"><b>${r.toFixed(2)}:1</b></td><td>${passChip(r, 4.5)}</td><td>${passChip(r, 3)}</td><td>${passChip(r, 7)}</td><td class="small ink-2">${use}</td></tr>`; }).join('')}</tbody></table></div>
@@ -357,15 +355,9 @@ function colour() {
       <div class="stack" style="--g:6px"><h4 class="h4">Check your own pairing</h4><p class="small muted">Pick any two colours from the palette.</p></div>
       <div class="br-pc-sel">
         ${N.field({ label: 'Text colour', id: 'br-pc-fg', value: '#101A15', opts: PICK.map(c => [c.hex, `${c.n} · ${c.hex}`]), attrs: 'data-change="br_pair"' })}
-        ${N.field({ label: 'Background', id: 'br-pc-bg', value: '#D5F2DF', opts: PICK.map(c => [c.hex, `${c.n} · ${c.hex}`]), attrs: 'data-change="br_pair"' })}
+        ${N.field({ label: 'Background', id: 'br-pc-bg', value: '#E2F2DA', opts: PICK.map(c => [c.hex, `${c.n} · ${c.hex}`]), attrs: 'data-change="br_pair"' })}
       </div>
-      <div class="br-pc-res" id="br-pc-res">${pairResult('#101A15', '#D5F2DF')}</div>
-    </div>
-    ${gap(72)}
-    ${sub('Dark theme', 'Hedge and zest stay the same. Surfaces become deep green-black, pastels become deep tints and their inks turn light. Every pairing keeps AA.', `<button type="button" class="btn btn-ink btn-sm" data-act="br_theme">${ic('moon')}Switch this page’s theme</button>`)}
-    <div class="br-dark" style="background:#0C120F;color:#EDF2EE">
-      <div class="br-dark-base">${DARK_BASE.map(([n, t, h]) => `<button type="button" class="br-dk" data-act="br_copy" data-v="${h}" aria-label="Copy ${n} ${h}"><span style="background:${h}"></span><b>${n}</b><span class="mono">${t}</span><span class="mono">${h}</span></button>`).join('')}</div>
-      <div class="br-dark-pairs">${DARK_PAIRS.map(([n, bg, ink]) => `<button type="button" class="br-dkp" style="background:${bg};color:${ink}" data-act="br_copy" data-v="${bg} / ${ink}" aria-label="Copy dark ${n} pair"><b>${n}</b><span class="mono">${ink}</span><span class="mono">on ${bg}</span><span class="mono">${ratio(ink, bg).toFixed(1)}:1</span></button>`).join('')}</div>
+      <div class="br-pc-res" id="br-pc-res">${pairResult('#101A15', '#E2F2DA')}</div>
     </div>
   `);
 }
@@ -374,11 +366,11 @@ function colour() {
    05 TYPOGRAPHY
    ===================================================================== */
 const SCALE = [
-  ['d-xl', 'Display XL', '52–128 px · 800 · −3.5%', 'Find your <em>fit</em>'],
-  ['d-l', 'Display L', '40–80 px · 800 · −3%', 'Every pitch, <em>checked</em>'],
-  ['d-m', 'Display M', '30–50 px · 800 · −2.5%', 'Ready to <em>trade</em>'],
-  ['d-s', 'Display S', '24–32 px · 800 · −2.5%', 'Camden Night <em>Market</em>'],
-  ['h-page', 'Page title', '30–42 px · 800', 'My <em>documents</em>'],
+  ['d-xl', 'Display XL', '52–128 px · 600 · −4.5%', 'Find your <em>fit</em>'],
+  ['d-l', 'Display L', '40–80 px · 600 · −4%', 'Every pitch, <em>checked</em>'],
+  ['d-m', 'Display M', '30–50 px · 600 · −3%', 'Ready to <em>trade</em>'],
+  ['d-s', 'Display S', '24–32 px · 600 · −3%', 'Camden Night <em>Market</em>'],
+  ['h-page', 'Page title', '30–42 px · 600', 'My <em>documents</em>'],
   ['h3', 'Heading 3', 'Figtree 20 px · 700', 'Documents expiring soon'],
   ['h4', 'Heading 4', 'Figtree 16.5 px · 700', 'Gas Safety Certificate'],
   ['lead', 'Lead', 'Figtree 17–19.5 px · 400 · 1.55', 'Build one passport and apply to any event in minutes.'],
@@ -387,9 +379,9 @@ const SCALE = [
   ['mono', 'Mono', 'DM Mono 12.5 px · tabular', 'NCH-26-0100 · PITCH B7 · 21/10/2026'],
   ['eyebrow', 'Eyebrow', 'DM Mono 11.5 px · caps · +12%', 'Food trader passport'],
 ];
-const TT = { text: 'Every pitch, checked.', size: 88, w: '800', it: true, bg: 'paper' };
-function ttTrack(size) { return size >= 64 ? -0.035 : size >= 40 ? -0.03 : -0.025; }
-function ttCSS(s) { return `font-family: "Fraunces", Georgia, serif;\nfont-weight: ${s.w};\nfont-size: ${s.size}px;\nletter-spacing: ${ttTrack(s.size)}em;\nline-height: ${s.size >= 64 ? .92 : 1};\nfont-variation-settings: "SOFT" 100, "WONK" 0;${s.it ? '\n/* last word: <em> with "WONK" 1, italic */' : ''}`; }
+const TT = { text: 'Every pitch, checked.', size: 88, w: '600', it: true, bg: 'paper' };
+function ttTrack(size) { return size >= 64 ? -0.045 : size >= 40 ? -0.04 : -0.03; }
+function ttCSS(s) { return `font-family: "Poppins", system-ui, sans-serif;\nfont-weight: ${s.w};\nfont-size: ${s.size}px;\nletter-spacing: ${ttTrack(s.size)}em;\nline-height: ${s.size >= 64 ? 1.02 : 1.06};${s.it ? '\n/* last word: <em>, weight 300 */' : ''}`; }
 function ttHTML(s) {
   const words = esc(s.text.trim() || 'Find your fit.').split(' ');
   const last = words.pop();
@@ -397,15 +389,15 @@ function ttHTML(s) {
 }
 function type() {
   const weights = [400, 500, 600, 700, 800];
-  return chap('type', '05', 'Soft serif, honest <em>sans</em>', 'Fraunces gives headlines warmth and weight. Figtree does the everyday work of reading and tapping. DM Mono handles anything you would check against a document.', `
+  return chap('type', '05', 'Geometric, clear, <em>precise</em>', 'Poppins gives headlines a clean, engineered shape. Figtree does the everyday work of reading and tapping. DM Mono handles anything you would check against a document.', `
     <div class="br-fams">
       <article class="br-fam br-fam-d blk blk-sunk">
         <div class="br-fam-h"><p class="eyebrow">Display</p><span class="mtag">Google Fonts</span></div>
         <p class="br-fam-aa" aria-hidden="true">A<em>a</em></p>
-        <h4 class="br-fam-n">Fraunces</h4>
+        <h4 class="br-fam-n">Poppins</h4>
         <p class="br-fam-g" aria-hidden="true">ABCDEFGHIJKLM<br>abcdefghijklm<br>0123456789 £&amp;?!</p>
-        <div class="tags"><span class="mtag">800</span><span class="mtag">SOFT 100</span><span class="mtag">WONK 0</span><span class="mtag">Italic WONK 1</span></div>
-        <p class="small ink-2">Headlines of 24 px and above, and big numbers. Tracking −2.5% to −3.5%, tighter as it grows.</p>
+        <div class="tags"><span class="mtag">600</span><span class="mtag">300 for the key word</span><span class="mtag">−3% to −4.5%</span></div>
+        <p class="small ink-2">Headlines of 24 px and above, and big numbers. Tracking −3% to −4.5%, tighter as it grows.</p>
       </article>
       <article class="br-fam br-fam-u blk blk-sunk">
         <div class="br-fam-h"><p class="eyebrow">Interface and body</p><span class="mtag">Google Fonts</span></div>
@@ -426,14 +418,14 @@ function type() {
     ${sub('Type scale', 'Rendered with the real classes from niche.css. Display sizes are fluid between the two values shown.')}
     <div class="br-tscale">${SCALE.map(([c, n, s, t]) => `<div class="br-ts-row"><div class="br-ts-meta"><code>.${c === 'br-body' ? 'body' : c}</code><b>${n}</b><span class="mono muted">${s}</span></div><div class="br-ts-s"><p class="${c}">${t}</p></div></div>`).join('')}</div>
     ${gap(72)}
-    ${sub('Type tester', 'Try a headline before you ship it. The slider stops at 24 px because Fraunces never goes smaller.')}
+    ${sub('Type tester', 'Try a headline before you ship it. The slider stops at 24 px because Poppins headlines never go smaller.')}
     <div class="br-tt" data-tt>
       <div class="br-tt-controls">
         ${N.field({ label: 'Headline', id: 'br-tt-text', value: TT.text, attrs: 'data-input="br_tt" data-k="text" maxlength="60"' })}
         <label class="field" for="br-tt-size"><span>Size <b class="mono" id="br-tt-sz">${TT.size} px</b></span><input type="range" class="br-range" id="br-tt-size" min="24" max="160" value="${TT.size}" data-input="br_tt" data-k="size"></label>
-        <div class="field"><span>Weight</span>${N.seg('br_tt_w', [['600', '600'], ['700', '700'], ['800', '800'], ['900', '900']], TT.w)}</div>
-        <div class="field"><span>Ground</span>${N.seg('br_tt_bg', [['paper', 'Paper'], ['hedge', 'Hedge'], ['lilac', 'Lilac'], ['butter', 'Butter']], TT.bg)}</div>
-        ${N.toggle('br-tt-it', 'Italic on the last word', TT.it, 'data-change="br_tt"')}
+        <div class="field"><span>Weight</span>${N.seg('br_tt_w', [['500', '500'], ['600', '600'], ['700', '700']], TT.w)}</div>
+        <div class="field"><span>Ground</span>${N.seg('br_tt_bg', [['paper', 'Paper'], ['hedge', 'Forest'], ['lilac', 'Lilac'], ['butter', 'Sage']], TT.bg)}</div>
+        ${N.toggle('br-tt-it', 'Light last word', TT.it, 'data-change="br_tt"')}
       </div>
       <div class="br-tt-stage" data-bg="${TT.bg}"><p class="br-tt-out" id="br-tt-out" style="font-size:${TT.size}px;font-weight:${TT.w};letter-spacing:${ttTrack(TT.size)}em">${ttHTML(TT)}</p></div>
       <div class="br-tt-css"><pre class="mono" id="br-tt-css">${esc(ttCSS(TT))}</pre><button type="button" class="btn btn-line btn-xs" data-act="br_ttcopy">${ic('copy')}Copy CSS</button></div>
@@ -441,13 +433,13 @@ function type() {
     ${gap(72)}
     ${sub('Pairing rules')}
     <ol class="br-rules">
-      <li><b>Serif for the headline, sans for the rest.</b> One Fraunces headline per view. Everything below it is Figtree.</li>
-      <li><b>One italic word.</b> Italicise the single word that carries the meaning: “Every pitch, <em>checked</em>.”</li>
+      <li><b>Poppins for the headline, Figtree for the rest.</b> One Poppins headline per view. Everything below it is Figtree.</li>
+      <li><b>One light word.</b> Set the single word that carries the meaning in 300: “Every pitch, <em>checked</em>.”</li>
       <li><b>Mono for facts you can check.</b> Dates, IDs, pitch numbers, prices in tables. If it would appear on a certificate, it is mono.</li>
       <li><b>Sentence case everywhere.</b> Only mono labels go uppercase. Headlines, buttons and menus never do.</li>
     </ol>
     ${gap(40)}
-    ${doDont(['Set headlines tight: −2.5% to −3.5% tracking, line height under 1.', 'Use tabular figures for anything in a column.', 'Keep body lines between 45 and 75 characters.'], ['Use Fraunces in buttons, labels or anything under 24 px.', 'Italicise more than one word in a headline.', 'Set whole sentences in uppercase mono.'])}
+    ${doDont(['Set headlines tight: −3% to −4.5% tracking, line height 1 to 1.06.', 'Use tabular figures for anything in a column.', 'Keep body lines between 45 and 75 characters.'], ['Use the 600 headline weight in buttons, labels or anything under 24 px.', 'Lighten more than one word in a headline.', 'Set whole sentences in uppercase mono.'])}
   `);
 }
 /* =====================================================================
@@ -459,7 +451,7 @@ function icons() {
     <div class="br-ic-demo">
       ${fig('Sizes', `<div class="row" style="--g:18px;align-items:flex-end">${[['ic-sm', 15], ['', 18], ['ic-lg', 22], ['ic-xl', 28]].map(([c, s]) => `<span class="br-ic-sz">${ic('truck', c)}<span class="mono">${s}</span></span>`).join('')}</div>`, '15 inline · 18 default · 22 large · 28 feature')}
       ${fig('Stroke', `<div class="row" style="--g:18px">${[1.4, 1.9, 2.6].map(w => `<span class="br-ic-sz br-stroke ${w === 1.9 ? 'on' : ''}" style="--sw:${w}">${ic('shield', 'ic-xl')}<span class="mono">${w}</span></span>`).join('')}</div>`, '1.9 at every size. Round caps, round joins.')}
-      ${fig('The one exception', `<div class="stack" style="--g:8px">${N.stars(5)}<span class="small muted">Rating stars are filled paprika</span></div>`, 'Nothing else is ever filled')}
+      ${fig('The one exception', `<div class="stack" style="--g:8px">${N.stars(5)}<span class="small muted">Rating stars are filled logo purple</span></div>`, 'Nothing else is ever filled')}
     </div>
     ${gap(40)}
     <div class="br-ic-bar"><label class="search" style="max-width:360px;width:100%">${ic('search')}<span class="sr">Filter icons</span><input type="search" placeholder="Filter icons, e.g. calendar" data-input="br_icf" autocomplete="off"></label><span class="mono muted" id="br-ic-n">${names.length} icons</span></div>
@@ -699,8 +691,8 @@ function apps() {
     </div>`;
   const flag = `<div class="br-flagstage"><div class="br-flag"><span class="br-flag-dots" aria-hidden="true"><i></i><i></i></span><p>Find your <em>fit.</em></p><span class="mono">Traders welcome · Pitch 12</span>${bwm('mono')}</div><span class="br-pole" aria-hidden="true"></span></div>`;
   const merch = `<div class="br-merch">
-      <div class="br-apron" role="img" aria-label="Hedge apron with the wordmark on the chest"><span class="br-apron-strap"></span><div class="br-apron-body">${bwm()}<span class="br-apron-pocket"><i></i><i></i></span></div></div>
-      <div class="br-tote" role="img" aria-label="Butter tote bag reading Ready to trade"><span class="br-tote-h"></span><div class="br-tote-body"><p>Ready to <em>trade.</em></p>${bwm('mono')}</div></div>
+      <div class="br-apron" role="img" aria-label="Forest apron with the wordmark on the chest"><span class="br-apron-strap"></span><div class="br-apron-body">${bwm()}<span class="br-apron-pocket"><i></i><i></i></span></div></div>
+      <div class="br-tote" role="img" aria-label="Sage tote bag reading Ready to trade"><span class="br-tote-h"></span><div class="br-tote-body"><p>Ready to <em>trade.</em></p>${bwm('mono')}</div></div>
     </div>`;
   const phone = `<div class="br-phone" role="img" aria-label="Phone home screen with the NICHE app icon"><div class="br-phone-scr">
       <div class="br-phone-sb"><span>14:20</span><span>5G</span></div>
@@ -711,11 +703,11 @@ function apps() {
     <div class="br-apps">
       ${fig('Instagram post', ig, '1080 × 1080 · pastel ground, arch, one headline', 'br-app')}
       ${fig('Event window sticker', sticker, 'Die-cut arch · 120 × 150 mm vinyl', 'br-app')}
-      ${fig('App icon on a home screen', phone, 'Hedge icon, two dots, clear at 40 px', 'br-app')}
+      ${fig('App icon on a home screen', phone, 'Forest icon, two dots, clear at 40 px', 'br-app')}
       ${fig('Trader passport card', passport, '85.6 × 54 mm · front and back', 'br-app w2')}
       ${fig('Email header', mail, '600 px wide · awning strip, wordmark, one call to action', 'br-app')}
       ${fig('Business card', card, '85 × 55 mm · front and back', 'br-app w2')}
-      ${fig('Pitch flag', flag, '600 × 1800 mm · violet, arch top', 'br-app')}
+      ${fig('Pitch flag', flag, '600 × 1800 mm · purple, arch top', 'br-app')}
       ${fig('Apron and tote', merch, 'Screen-printed, one colour per item', 'br-app w3')}
     </div>
   `);
@@ -728,25 +720,26 @@ const TOKENS_LIGHT = `:root {
   --bg: #FFFFFF; --surface: #FFFFFF; --sunk: #F5F4F0; --sunk-2: #ECEAE3;
   --line: #E4E1DA; --line-2: #CDC9BF;
   --ink: #101A15; --ink-2: #38433D; --muted: #69726C; --inv: #FFFFFF;
-  /* brand */
-  --hedge: #0E3B2E; --hedge-2: #17503F; --on-hedge: #EEF6E9; --on-hedge-2: #A7C3B5;
-  --violet: #5A31E4; --violet-2: #4623C4; --on-violet: #FFFFFF;
-  --zest: #DDF85E; --paprika: #FF5A36;
+  /* brand: the logo's forest, green and purple */
+  --hedge: #124734; --hedge-2: #1B5C44; --on-hedge: #EEF6EA; --on-hedge-2: #A9C6B6;
+  --violet: #6A63C4; --violet-2: #5A52B5; --on-violet: #FFFFFF;
+  --zest: #6BC04B; --paprika: #948FCF;
   /* pastels and their inks */
-  --mint: #D5F2DF; --mint-ink: #0E5236;
-  --lilac: #E9E2FF; --lilac-ink: #3D1DA0;
-  --butter: #FFF0A8; --butter-ink: #6B5300;
-  --peach: #FFD8C9; --peach-ink: #8C2B12;
-  --sky: #D8EAF8; --sky-ink: #0F4068;
+  --mint: #E2F2DA; --mint-ink: #124734;
+  --lilac: #ECEAF8; --lilac-ink: #463F96;
+  --butter: #EDF6DC; --butter-ink: #2F5E1C;
+  --peach: #E9E7F7; --peach-ink: #463F96;
+  --sky: #E4EEE8; --sky-ink: #124734;
   /* status */
-  --ok: #137443; --ok-bg: #DCF3E4;
+  --ok: #2F7A22; --ok-bg: #E2F2DA;
   --warn: #9E5A00; --warn-bg: #FFEFCC;
   --risk: #C0321E; --risk-bg: #FFE2DB;
-  --info: #3D1DA0; --info-bg: #E9E2FF;
+  --info: #463F96; --info-bg: #ECEAF8;
   /* wordmark dots */
-  --dot-trader: #5FBF3A; --dot-organiser: #9B8CF2;
+  --dot-trader: #58A63B; --dot-organiser: #948FCF;
   /* type */
-  --f-display: "Fraunces", Georgia, serif;
+  --f-display: "Poppins", system-ui, sans-serif;
+  --w-display: 600; --w-display-em: 300;
   --f-ui: "Figtree", system-ui, sans-serif;
   --f-mono: "DM Mono", ui-monospace, monospace;
   /* radius */
@@ -757,28 +750,7 @@ const TOKENS_LIGHT = `:root {
   --ease-land: cubic-bezier(.3,1.5,.5,1);
   --ease-spring: cubic-bezier(.3,1.3,.5,1);
 }`;
-const TOKENS_DARK = `[data-theme="dark"] {
-  /* surfaces and text */
-  --bg: #0C120F; --surface: #131B17; --sunk: #18221D; --sunk-2: #1F2A24;
-  --line: #26322C; --line-2: #36453C;
-  --ink: #EDF2EE; --ink-2: #C3CCC6; --muted: #8E9993; --inv: #0C120F;
-  /* brand (hedge and zest do not change) */
-  --violet: #7352FF; --violet-2: #8A6DFF;
-  /* pastels become deep tints, inks turn light */
-  --mint: #16382A; --mint-ink: #A6E6C0;
-  --lilac: #251D4D; --lilac-ink: #CFC3FF;
-  --butter: #3A3212; --butter-ink: #F4DD7C;
-  --peach: #40241A; --peach-ink: #FFBDA6;
-  --sky: #142F45; --sky-ink: #AAD3F3;
-  /* status */
-  --ok: #5FD18F; --ok-bg: #12301F;
-  --warn: #F2B659; --warn-bg: #35280F;
-  --risk: #FF8B78; --risk-bg: #3D1C16;
-  --info: #CFC3FF; --info-bg: #251D4D;
-  /* wordmark dots on dark */
-  --dot-trader: #DDF85E; --dot-organiser: #B6A8FF;
-}`;
-const FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Figtree:ital,wght@0,400..800;1,400..800&family=DM+Mono:wght@400;500&display=swap">';
+const FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,600&family=Figtree:ital,wght@0,400..800;1,400..800&family=DM+Mono:wght@400;500&display=swap">';
 const hl = css => esc(css)
   .replace(/(\/\*.*?\*\/)/g, '<span class="c">$1</span>')
   .replace(/(--[\w-]+)(:)/g, '<span class="k">$1</span>$2')
@@ -786,18 +758,18 @@ const hl = css => esc(css)
 const SHIP = [
   'The wordmark is the master artwork, above minimum size, with clear space on every side.',
   'Every text pairing passes AA: 4.5:1 for body, 3:1 for large text.',
-  'Fraunces only on headlines of 24 px and up, with one italic word at most.',
+  'Poppins only on headlines of 24 px and up, with one light word at most.',
   'Colours come from tokens, and the side colour matches the product area.',
   'Copy says “checked”, never “certified” or “guaranteed”, in UK English.',
-  'It works at 375 px wide, in dark theme and with reduced motion on.',
+  'It works at 375 px wide and with reduced motion on.',
 ];
 function tokens() {
   const pane = (title, css, key) => `<div class="br-code"><div class="br-code-h"><span class="mono">${title}</span><button type="button" class="btn btn-onhedge btn-xs" data-act="br_copyblock" data-k="${key}">${ic('copy')}Copy</button></div><pre><code>${hl(css)}</code></pre></div>`;
-  return chap('tokens', '12', 'The system as <em>code</em>', 'Every colour, font, radius and curve in this book is a CSS custom property. Use the tokens and the light and dark themes come for free.', `
-    <div class="row between" style="margin-bottom:16px"><span class="small muted">From <code>css/niche.css</code>. Swap the file, never the values inline.</span><button type="button" class="btn btn-ink btn-sm" data-act="br_copyblock" data-k="all">${ic('copy')}Copy light and dark</button></div>
-    <div class="br-codes">${pane('Light · :root', TOKENS_LIGHT, 'light')}${pane('Dark · [data-theme="dark"]', TOKENS_DARK, 'dark')}</div>
+  return chap('tokens', '12', 'The system as <em>code</em>', 'Every colour, font, radius and curve in this book is a CSS custom property. Use the tokens and every screen stays on brand.', `
+    <div class="row between" style="margin-bottom:16px"><span class="small muted">From <code>css/niche.css</code>. Swap the file, never the values inline.</span><button type="button" class="btn btn-ink btn-sm" data-act="br_copyblock" data-k="light">${ic('copy')}Copy tokens</button></div>
+    <div class="br-codes br-codes-one">${pane(':root', TOKENS_LIGHT, 'light')}</div>
     ${gap(28)}
-    <div class="br-embed card"><div class="stack" style="--g:6px"><h4 class="h4">Google Fonts embed</h4><p class="small muted">Fraunces with its SOFT and WONK axes, Figtree 400 to 800, DM Mono 400 and 500.</p></div><pre class="mono br-embed-code">${esc(FONTS)}</pre><div>${copyBtn(FONTS, 'Copy embed line')}</div></div>
+    <div class="br-embed card"><div class="stack" style="--g:6px"><h4 class="h4">Google Fonts embed</h4><p class="small muted">Poppins 300 to 700, Figtree 400 to 800, DM Mono 400 and 500.</p></div><pre class="mono br-embed-code">${esc(FONTS)}</pre><div>${copyBtn(FONTS, 'Copy embed line')}</div></div>
     ${gap(72)}
     ${sub('Before you ship anything', 'Six checks. Tick them off as you go.')}
     <div class="br-ship blk blk-sunk">
@@ -925,8 +897,7 @@ function play(demo, el) {
 function ttApply() {
   const out = $('#br-tt-out'); if (!out) return;
   out.innerHTML = ttHTML(TT);
-  out.style.fontSize = TT.size + 'px'; out.style.fontWeight = TT.w; out.style.letterSpacing = ttTrack(TT.size) + 'em'; out.style.lineHeight = TT.size >= 64 ? '.92' : '1';
-  out.style.setProperty('--emw', Math.max(500, +TT.w - 100));
+  out.style.fontSize = TT.size + 'px'; out.style.fontWeight = TT.w; out.style.letterSpacing = ttTrack(TT.size) + 'em'; out.style.lineHeight = TT.size >= 64 ? '1.02' : '1.06';
   $('.br-tt-stage').dataset.bg = TT.bg;
   $('#br-tt-sz').textContent = TT.size + ' px';
   $('#br-tt-css').textContent = ttCSS(TT);
@@ -953,8 +924,7 @@ Object.assign(N.act, {
   br_jump(el) { jump(el.dataset.ch); },
   br_copy(el) { N.copy(el.dataset.v); },
   br_copyblock(el) {
-    const k = el.dataset.k, v = k === 'light' ? TOKENS_LIGHT : k === 'dark' ? TOKENS_DARK : TOKENS_LIGHT + '\n\n' + TOKENS_DARK;
-    copyQuiet(v, k === 'all' ? 'light and dark tokens' : k + ' tokens', el.closest('.br-code')?.querySelector('pre'));
+    copyQuiet(TOKENS_LIGHT, 'tokens', el.closest('.br-code')?.querySelector('pre'));
   },
   br_ttcopy() { copyQuiet(ttCSS(TT), 'type tester CSS', $('#br-tt-css')); },
   br_replay(el) { play(el.dataset.demo); },
@@ -971,7 +941,6 @@ Object.assign(N.act, {
   br_demo_accept() { N.closeAll(); N.toast('Masala Wheels approved for Camden Night Market. Demo only, nothing was saved.'); },
   br_demo_withdraw() { N.closeAll(); N.toast('Application withdrawn. Reed Events has been told.', { undo: () => N.toast('Application restored.') }); },
   br_tab(el) { const list = el.closest('[role=tablist]'); $$('[role=tab]', list).forEach(b => b.setAttribute('aria-selected', String(b === el))); },
-  br_theme() { const b = $('#themeBtn'); if (b) b.click(); },
 });
 Object.assign(N.input, {
   br_pers(el) {

@@ -1,9 +1,10 @@
 ﻿/* =====================================================================
    Landing page (site/home): motion-first homepage built around the
    original logo's two dots. Green dot = traders, purple dot = organisers.
-   Hero: no logo; the two dots (flat, 2D) open the original hero sequence
-   from the live site (rendered to MP4), hold the video by its corners and
-   fly down with the scroll to become the Trader and Organiser circles.
+   Hero: the two dots (flat, 2D) open onto the hero motion graphic
+   (hero-motion/, rendered to MP4), playing full screen. They
+   rest at its corners and fly down with the scroll to become the Trader and
+   Organiser circles.
    Motion: GSAP + ScrollTrigger (cdnjs) and Lenis (jsDelivr), used on this
    page only and torn down on every route change. Without them (or with
    reduced motion) the page renders as a static, fully usable layout.
@@ -13,7 +14,7 @@
 const { $, $$, ic, esc, db } = N;
 
 /* The hero video: the live site's own hero sequence (niche-live-demo.netlify.app), rendered frame by frame. */
-const VIDEO = { wide: 'assets/niche-hero-16x9', tall: 'assets/niche-hero-9x16', still: 7.4 }; // .mp4 + .jpg poster (the "WE FIX THAT." frame)
+const VIDEO = { wide: 'assets/niche-hero-16x9', tall: 'assets/niche-hero-9x16', still: 21.0 }; // .mp4 + .jpg poster (the "Find your perfect pitch." frame)
 const tallScreen = () => matchMedia('(max-width: 760px)').matches;
 
 /* ---------- the original logo, rebuilt exactly as the live site draws it ----------
@@ -99,7 +100,7 @@ const AUD = {
 /* ---------- markup ---------- */
 function nav() {
   return `<header class="lp-nav" data-tone="light">
-    <button type="button" class="lp-pill lp-menu" data-act="mobileMenu" aria-label="Open menu"><i aria-hidden="true"></i>Menu</button>
+    <button type="button" class="lp-pill lp-menu" data-act="lp_menu" aria-label="Open menu" aria-haspopup="dialog"><i aria-hidden="true"></i>Menu</button>
     <button type="button" class="lp-navlogo" data-go="site/home" aria-label="Niche home">${N.logo('lp-nl')}</button>
     <div class="lp-navr">
       <div class="lp-seg" role="group" aria-label="Show the page for" ${S.aud ? '' : 'hidden'}><button type="button" data-act="lp_pick" data-aud="trader" aria-pressed="${S.aud === 'trader'}">Traders</button><button type="button" data-act="lp_pick" data-aud="org" aria-pressed="${S.aud === 'org'}">Organisers</button></div>
@@ -110,10 +111,9 @@ function nav() {
 function hero() {
   const src = tallScreen() ? VIDEO.tall : VIDEO.wide;
   return `<section class="lp-hero" id="lpHero" data-tone="light" aria-labelledby="lpH1">
-    <h1 class="lp-h1" id="lpH1" aria-label="Find your perfect pitch."><span class="l1" aria-hidden="true">${letters('Find your')}</span><span class="l2" aria-hidden="true"><em>${letters('perfect pitch.')}</em></span></h1>
-    <p class="lp-side"><span class="ln"><span>The compliance-first platform connecting UK food traders with event organisers.</span></span></p>
-    <div class="lp-card" id="lpCard" data-note="The original hero sequence from the live NICHE site, rendered frame by frame into MP4 (16:9 for desktop, 9:16 for phones). The two dots open it, hold it by its corners and fly down with the scroll into the next section.">
-      <video id="lpVid" src="${src}.mp4" poster="${src}.jpg" muted autoplay loop playsinline preload="auto" aria-label="NICHE: connect events and food traders"></video>
+    <h1 class="sr" id="lpH1">Find your perfect pitch.</h1>
+    <div class="lp-card" id="lpCard" data-note="A 23.5 s motion graphic made for this page in the two-dot language: events need food, the paperwork piles up, the green dot (traders) turns it into a passport, the purple dot (organisers) sees who is ready, one tap brings them together, free on both sides. 60 fps, 16:9 on desktop and phone-shaped on mobile, looping seamlessly.">
+      <video id="lpVid" src="${src}.mp4" poster="${src}.jpg" muted autoplay loop playsinline preload="auto" aria-label="NICHE: food traders and event organisers, checked and matched"></video>
       <button type="button" class="lp-vbtn" id="lpVbtn" aria-label="Pause video"></button>
     </div>
     <div class="lp-cue mono" aria-hidden="true"><span>Scroll</span><i></i></div>
@@ -217,12 +217,10 @@ function Ring(stage) {
    ===================================================================== */
 function loop() {
   let last = performance.now();
-  const tick = now => {
-    if (!LP.alive) return;
-    const dt = Math.min(.05, (now - last) / 1000); last = now;
-    LP.loops.forEach(f => f(dt));
-    LP.raf = requestAnimationFrame(tick);
-  };
+  const step = () => { const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now; LP.loops.forEach(f => f(dt)); };
+  /* on the GSAP ticker everything (tweens, Lenis, canvas, DOM dots) updates in the same tick, so nothing lags a frame */
+  if (window.gsap) { LP.tickLoop = () => { if (LP.alive) step(); }; gsap.ticker.add(LP.tickLoop); return; }
+  const tick = () => { if (!LP.alive) return; step(); LP.raf = requestAnimationFrame(tick); };
   LP.raf = requestAnimationFrame(tick);
 }
 
@@ -230,15 +228,14 @@ function loop() {
    Hero: the logo's two dots (flat, 2D).
    Opening: they pop in side by side and jelly-bounce, swing like a pendulum
    (one floods its half of the screen, pinches to a line, the other floods
-   back), then purple floods the screen and collapses into the video card.
-   Rest: they hold the card by its top-left and bottom-right corners.
-   Scroll: they ride the corners as the video zooms, then fly down and
-   become the Trader and Organiser circles of the next section.
+   back), then purple floods the screen and recedes into its dot at the
+   bottom-right corner, uncovering the video playing full screen.
+   Rest: green at the top-left corner, purple at the bottom-right.
+   Scroll: they fly down and become the Trader and Organiser circles.
    ===================================================================== */
-const ease = { io: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3), in2: x => x * x };
+const ease = { io: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, out: x => 1 - Math.pow(1 - x, 3) };
 const lerp = (a, b, k) => a + (b - a) * k;
 const clamp01 = v => Math.max(0, Math.min(1, v));
-const letters = s => s.split(' ').map(w => `<span class="lw">${[...w].map(c => `<span class="lt">${c}</span>`).join('')}</span>`).join(' ');
 const GREEN = '#58A63B', PURPLE = '#948FCF';
 const dotR = () => { const W = innerWidth, mob = W < 760; return { t: mob ? W * .068 : Math.min(W * .029, 44), o: mob ? W * .058 : Math.min(W * .025, 38) }; };
 
@@ -255,69 +252,77 @@ function IntroCanvas(hero) {
     const w = r * 2 * (1 - .26 * j) * pop, h = r * 2 * (1 + .85 * j) * pop, cy = y - r * .85 * j * pop;
     ctx.beginPath(); ctx.roundRect(x - w / 2, cy - h / 2, w, h, w / 2);
   }
+  /* radius paced to what the eye sees (tuned frame by frame): slow while the edge is on screen, quick once it is past the edges */
+  const grow = (a, b, u, k) => a + (b - a) * Math.pow(u, k);           // a small circle growing big
+  const shrink = (a, b, u, k) => b + (a - b) * Math.pow(1 - u, k);     // a big circle shrinking small, landing at zero speed
+  const sine = u => -(Math.cos(Math.PI * u) - 1) / 2;
   function draw(O) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     const mob = W < 760, r = mob ? Math.min(W * .075, 30) : Math.min(W * .026, 40), cx = W / 2, cy = H / 2;
     const gx = cx - r, px = cx + r, big = Math.hypot(W, H) * 1.25, Rb = W * 3;
-    const s = O.sw, fl = O.fl;
     const fill = c => { ctx.fillStyle = c; ctx.fill(); };
     const hole = (x, y, rr, c) => { ctx.globalCompositeOperation = 'xor'; circle(x, y, rr); ctx.fillStyle = c; ctx.fill(); ctx.globalCompositeOperation = 'source-over'; };   // own colour outside the flood, a cut-out inside it
-    if (fl > 0) {                                  /* final flood: purple grows over everything, green is a hole until it takes its colour back */
-      const R = lerp(r, big, ease.in2(fl)), x = lerp(px, cx, ease.io(fl));
-      circle(x, cy, R); fill(PURPLE);
-      if (O.back < 1) hole(gx, cy, r, GREEN);
-      if (O.back > 0) { ctx.globalAlpha = O.back; circle(gx, cy, r); fill(GREEN); ctx.globalAlpha = 1; }
+    if (O.rc > 0) {                                /* purple gathers back into its dot at the bottom-right corner, uncovering the video from the top-left */
+      const a = LP.anchor, u = O.rc, tx = a ? a.o[0] - X : W - 60, ty = a ? a.o[1] - Y : H - 60, tr = a ? a.ro : r;
+      circle(lerp(cx, tx, sine(u)), lerp(cy, ty, sine(u)), shrink(big, tr, u, 1.5)); fill(PURPLE);
       return;
     }
-    if (s <= 0) {                                  /* pop in + jelly */
-      capsule(gx, cy, r, O.jT, O.popT); fill(GREEN);
-      capsule(px, cy, r, O.jO, O.popO); fill(PURPLE);
+    if (O.fl > 0) {                                /* purple floods the whole screen; green is a hole that refills from its centre */
+      const u = O.fl;
+      circle(lerp(px, cx, sine(u)), cy, grow(r, big, u, 1.5)); fill(PURPLE);
+      hole(gx, cy, r, GREEN);
+      if (O.back > 0) { circle(gx, cy, r * O.back); fill(GREEN); }
       return;
     }
-    const k = n => clamp01(n);
-    if (s < .38) {                                 /* A: purple grows to the right; its left edge slides onto green's centre, cutting green in half */
-      const u = ease.in2(k(s / .38)), R = lerp(r, big, u), edge = lerp(cx, gx, ease.out(k(s / .3)));
-      circle(edge + R, cy, R); fill(PURPLE); hole(gx, cy, r, GREEN);
-    } else if (s < .5) {                           /* B: its right edge sweeps in until it is a line through green's centre */
-      const v = ease.io(k((s - .38) / .12)), xr = lerp(W + 40, gx, v);
-      ctx.save(); circle(xr - Rb, cy, Rb); ctx.clip(); circle(gx + big, cy, big); fill(PURPLE); ctx.restore(); hole(gx, cy, r, GREEN);
-    } else if (s < .62) {                          /* B': from that line green opens left, its right edge reaching purple's centre */
-      const v = ease.io(k((s - .5) / .12)), xl = lerp(gx, -40, v), xr = lerp(gx, px, v);
+    if (O.dR > 0) {                                /* A': green shrinks back into its dot, its right edge sliding home */
+      const u = O.dR;
+      const R = shrink(big, r, u, 2); circle(lerp(px, cx, sine(u)) - R, cy, R); fill(GREEN); hole(px, cy, r, PURPLE);
+      return;
+    }
+    if (O.cX > 0) {                                /* B': out of the line green opens left, its right edge reaching purple's centre */
+      const v = O.cX, xl = lerp(gx, -40, v), xr = lerp(gx, px, v);
       ctx.save(); circle(xl + Rb, cy, Rb); ctx.clip(); circle(xr - big, cy, big); fill(GREEN); ctx.restore(); hole(px, cy, r, PURPLE);
-    } else {                                       /* A': green shrinks back into its dot, its right edge sliding home */
-      const u = ease.out(k((s - .62) / .38)), R = lerp(big, r, u), edge = lerp(px, cx, ease.io(k((s - .7) / .3)));
-      circle(edge - R, cy, R); fill(GREEN); hole(px, cy, r, PURPLE);
-      if (s >= .999) { circle(px, cy, r); fill(PURPLE); }
+      return;
     }
+    if (O.bX > 0) {                                /* B: purple's right edge sweeps in until it is a line through green's centre */
+      const xr = lerp(W + 40, gx, O.bX);
+      ctx.save(); circle(xr - Rb, cy, Rb); ctx.clip(); circle(gx + big, cy, big); fill(PURPLE); ctx.restore(); hole(gx, cy, r, GREEN);
+      return;
+    }
+    if (O.aR > 0) {                                /* A: purple blooms to the right; its left edge slides onto green's centre, cutting green in half */
+      const u = O.aR, R = grow(r, big, u, 2), edge = lerp(cx, gx, sine(Math.min(1, u * 1.6)));
+      circle(edge + R, cy, R); fill(PURPLE); hole(gx, cy, r, GREEN);
+      return;
+    }
+    capsule(gx, cy, r, O.jT, O.popT); fill(GREEN);  /* pop in + jelly */
+    capsule(px, cy, r, O.jO, O.popO); fill(PURPLE);
   }
   return { draw, size, el: cv, remove() { cv.remove(); } };
 }
 
-/* the two dots as a fixed overlay, positioned every frame from the card, the scroll and the chooser */
+/* the two dots as a fixed overlay, positioned every frame from the video, the scroll and the chooser */
 function Dots() {
-  const fly = $('#lpFly'), el = { t: $('.lp-dot.t', fly), o: $('.lp-dot.o', fly) }, drops = $$('.lp-drop', fly);
+  const fly = $('#lpFly'), el = { t: $('.lp-dot.t', fly), o: $('.lp-dot.o', fly) };
   const card = $('#lpCard'), hero = $('#lpHero'), choose = $('#lpChoose'), picks = { t: $('.lp-pick.t', choose), o: $('.lp-pick.o', choose) };
   const O = LP.O;
   let t = 0;
-  const P = { x: -1e4, y: -1e4, over: false };
+  const P = { x: -1e4, y: -1e4 };
   const S = { t: { x: 0, y: 0, vx: 0, vy: 0, init: false }, o: { x: 0, y: 0, vx: 0, vy: 0, init: false } };
-  const DROPS = [[-2.3, 1.15], [-1.7, .95], [-.95, 1.25], [-.35, .85], [.35, 1.05]];   // splash angles (rad) and reach
   function frame(dt) {
     if (!N.reduce) t += dt;
     const W = innerWidth, mob = W < 760, R = dotR();
     const cr = card.getBoundingClientRect(), hr = hero.getBoundingClientRect();
-    const p = LP.zoomP || 0, q = LP.motion && LP.chooseST ? LP.chooseST.progress : 0, qe = ease.io(q);
-    const fillP = clamp01(p / .55);                   // 1 once the video fills the screen
-    const inset = fillP * (mob ? 30 : 54);
+    const q = LP.motion && LP.chooseST ? LP.chooseST.progress : 0, qe = ease.io(q);
     const live = O.intro >= 1;                       // the opening has handed over to the DOM dots
     fly.style.opacity = (live || O.hand > 0) && q < .999 && hr.bottom > -400 ? '1' : '0';
     choose.classList.toggle('arrived', !LP.motion || q >= .999);
-    /* rest anchors: the card's top-left and bottom-right corners (pulled inward as the video fills the screen) */
+    /* rest: green at the video's top-left corner (clear of the floating nav), purple at its bottom-right */
+    const inset = mob ? 30 : 54, navClear = mob ? 70 : 92, bottom = Math.min(cr.bottom, innerHeight);   // phones: the prototype bar pushes the hero below the fold, so rest on the visible edge
     const breathe = (ph, a) => Math.sin(t * 1.5 + ph) * a;
-    const navClear = fillP * (mob ? 70 : 92);           // keep green clear of the floating nav when the video fills the screen
-    const A = { t: [cr.left + inset + breathe(0, 1.5), cr.top + inset + navClear + breathe(.6, 2.5)], o: [cr.right - inset + breathe(2, 1.5), cr.bottom - inset + breathe(2.6, 2.5)] };
-    /* where the opening leaves them: the centre of the hero, side by side */
-    const ir = mob ? Math.min(W * .075, 30) : Math.min(W * .026, 40), C = [hr.left + hr.width / 2, hr.top + hr.height / 2];
+    const A = { t: [cr.left + inset + breathe(0, 1.5), cr.top + inset + navClear + breathe(.6, 2.5)], o: [cr.right - inset + breathe(2, 1.5), bottom - inset + breathe(2.6, 2.5)] };
+    LP.anchor = { o: A.o, ro: R.o };              // where the opening's purple flood gathers, exactly where the dot rests
+    /* where the opening leaves green: the centre of the hero */
+    const HW = hr.width, ir = HW < 760 ? Math.min(HW * .075, 30) : Math.min(HW * .026, 40), C = [hr.left + HW / 2, hr.top + hr.height / 2];   // same size and place as the canvas dot
     const I = { t: [C[0] - ir, C[1]], o: A.o };
     const pr = { t: picks.t.getBoundingClientRect(), o: picks.o.getBoundingClientRect() };
     ['t', 'o'].forEach(k => {
@@ -325,30 +330,22 @@ function Dots() {
       let x = lerp(I[k][0], A[k][0], settle), y = lerp(I[k][1], A[k][1], settle);
       let size = k === 't' ? lerp(ir, R.t, settle) : R.o * O.pPop;
       /* a gentle lean toward the cursor while resting */
-      if (live && p < .02 && q <= 0) { const dx = P.x - x, dy = P.y - y, d = Math.hypot(dx, dy), reach = R[k] * 3.2; if (d < reach) { const f = (1 - d / reach) * .2; x += dx * f; y += dy * f; } }
+      if (live && q <= 0) { const dx = P.x - x, dy = P.y - y, d = Math.hypot(dx, dy), reach = R[k] * 3.2; if (d < reach) { const f = (1 - d / reach) * .2; x += dx * f; y += dy * f; } }
       /* fly into the chooser circle */
       const tr = pr[k], tx = tr.left + tr.width / 2, ty = tr.top + tr.height / 2;
       x = lerp(x, tx, qe); y = lerp(y, ty, qe); size = lerp(size, tr.width / 2, qe);
       const s = S[k];
-      if (!s.init || !live || q > 0 || p > .02 || N.reduce) { s.vx = s.init ? (x - s.x) / Math.max(dt, .001) : 0; s.vy = s.init ? (y - s.y) / Math.max(dt, .001) : 0; s.x = x; s.y = y; s.init = true; }
+      if (!s.init || !live || q > 0 || N.reduce) { s.vx = s.init ? (x - s.x) / Math.max(dt, .001) : 0; s.vy = s.init ? (y - s.y) / Math.max(dt, .001) : 0; s.x = x; s.y = y; s.init = true; }
       else { const k1 = 160, c1 = 19; s.vx += ((x - s.x) * k1 - s.vx * c1) * dt; s.vy += ((y - s.y) * k1 - s.vy * c1) * dt; s.x += s.vx * dt; s.y += s.vy * dt; }
       const sp = Math.hypot(s.vx, s.vy), st = q > 0 ? 0 : Math.min(.22, sp / 3200), ang = Math.atan2(s.vy, s.vx);
-      const grip = live && P.over && p < .02 ? 1 : 0;      // squeeze a little when the video is hovered, like holding it
+      const jelly = k === 'o' ? O.pSq : 0;             // purple touches down with a soft jelly
       const e = el[k];
       e.style.width = e.style.height = (size * 2).toFixed(1) + 'px';
-      e.style.transform = `translate3d(${(s.x - size).toFixed(1)}px,${(s.y - size).toFixed(1)}px,0) rotate(${ang}rad) scale(${(1 + st).toFixed(3)},${(1 - st * .5).toFixed(3)}) rotate(${-ang}rad) scale(${(1 + grip * .1).toFixed(3)},${(1 - grip * .1).toFixed(3)})`;
+      e.style.transform = `translate3d(${(s.x - size).toFixed(1)}px,${(s.y - size).toFixed(1)}px,0) rotate(${ang}rad) scale(${(1 + st).toFixed(3)},${(1 - st * .5).toFixed(3)}) rotate(${-ang}rad) scale(${(1 + jelly).toFixed(3)},${(1 - jelly).toFixed(3)})`;
       e.style.opacity = k === 'o' && O.pPop <= 0 ? '0' : '1';
     });
-    /* purple's return: droplets splash out of the corner and gather back into the dot */
-    const sp = O.splash, [ox, oy] = A.o;
-    drops.forEach((d, i) => {
-      const [a, reach] = DROPS[i], out = Math.sin(Math.PI * sp) * reach * R.o * 3.2, sz = R.o * (.42 - i * .04) * (1 - sp * .5);
-      d.style.opacity = sp > 0 && sp < 1 ? '1' : '0';
-      d.style.width = d.style.height = (sz * 2).toFixed(1) + 'px';
-      d.style.transform = `translate3d(${(ox + Math.cos(a) * out - sz).toFixed(1)}px,${(oy + Math.sin(a) * out - sz).toFixed(1)}px,0)`;
-    });
   }
-  on(window, 'pointermove', e => { P.x = e.clientX; P.y = e.clientY; P.over = !!(e.target.closest && e.target.closest('#lpCard')); });
+  on(window, 'pointermove', e => { P.x = e.clientX; P.y = e.clientY; });
   return { frame };
 }
 
@@ -364,77 +361,67 @@ function heroVideo() {
   on(btn, 'click', e => { e.stopPropagation(); if (v.paused) { user = false; play(); } else { user = true; v.pause(); } });
   const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { if (!user) play(); } else v.pause(); });
   io.observe(hero); LP.ios.push(io);
-  /* the sequence's own background: green 0-6.2, white 6.2-18.2, green 18.2-24.2, white to the end (1 unit = 1.4 s) */
-  const bgDark = () => { const u = v.currentTime / 1.4; return u < 5.85 || (u >= 17.85 && u < 23.85); };
+  /* the hero motion graphic is light all the way through (paper, the logo green, the logo purple), so the nav stays dark-on-light */
+  const bgDark = () => false;
   on(v, 'timeupdate', () => heroTone());
   LP.vid = { bgDark, restart() { try { v.currentTime = 0; } catch (e) { /* not ready */ } if (!user) play(); } };
 }
 
 function intro(G) {
-  const O = LP.O; Object.assign(O, { intro: 0, hand: 0, popT: 0, popO: 0, jT: 0, jO: 0, sw: 0, fl: 0, back: 0, gSettle: 0, pPop: 0, splash: 0 });
-  const root = LP.root, hero = $('#lpHero'), card = $('#lpCard'), vid = $('#lpVid');
-  const lts = $$('.lp-h1 .lt', root), navEl = $('.lp-nav', root), soft = $$('.lp-side .ln > span, .lp-cue > *', root);
+  const O = LP.O; Object.assign(O, { intro: 0, hand: 0, popT: 0, popO: 0, jT: 0, jO: 0, aR: 0, bX: 0, cX: 0, dR: 0, fl: 0, back: 0, rc: 0, gSettle: 0, pPop: 0, pSq: 0 });
+  const root = LP.root, hero = $('#lpHero'), card = $('#lpCard');
+  const navEl = $('.lp-nav', root), cue = $('.lp-cue', root);
   const cv = IntroCanvas(hero); LP.introCv = cv;
-  const paint = () => { if (O.hand < 1) cv.draw(O); };
-  const cw = card.offsetWidth, ch = card.offsetHeight, homeL = card.offsetLeft, homeT = card.offsetTop, HW = hero.clientWidth, HH = hero.clientHeight;
-  G.set(card, { autoAlpha: 0 }); G.set(vid, { opacity: 0 });
-  G.set(lts, { yPercent: 115 }); G.set(navEl, { autoAlpha: 0, y: -14 }); G.set(soft, { autoAlpha: 0, y: 14 });
-  const tl = G.timeline({ defaults: { ease: 'expo.out' }, onUpdate: paint, onComplete: done });
-  tl.to(O, { popT: 1, duration: .5, ease: 'back.out(2.4)' }, .1)                          // the two dots pop in, side by side
-    .to(O, { popO: 1, duration: .5, ease: 'back.out(2.4)' }, .2)
-    .to(O, { jO: 1, duration: .24, ease: 'power2.out' }, .62)                            // jelly: purple stretches up into a pill
-    .to(O, { jO: 0, duration: .75, ease: 'elastic.out(1, .38)' }, .86)                   // ...and bounces back
-    .to(O, { jT: 1, duration: .24, ease: 'power2.out' }, .78)                            // green answers
-    .to(O, { jT: 0, duration: .75, ease: 'elastic.out(1, .38)' }, 1.02)
-    .to(O, { sw: 1, duration: 1.25, ease: 'none' }, 1.62)                                // pendulum: purple floods right, pinches, green floods left and shrinks back
-    .to(O, { fl: 1, duration: .8, ease: 'none' }, 3.0)                                   // purple floods the whole screen, green is a hole in it
-    .to(O, { back: 1, duration: .25, ease: 'power1.out' }, 3.62)                         // ...and takes its colour back
-    .add(() => {                                                                          // hand over: the purple screen becomes the video card
-      O.hand = 1; cv.remove(); LP.introCv = null;
-      G.set(card, { autoAlpha: 1, left: HW / 2, top: HH / 2, width: HW, height: HH, borderRadius: 0, backgroundColor: PURPLE });
-    }, 3.82)
-    .to(card, { left: homeL, top: homeT, width: cw, height: ch, borderRadius: 26, duration: 1.15, ease: 'expo.inOut' }, 3.84)
-    .call(() => LP.vid && LP.vid.restart(), null, 4.15)
-    .to(vid, { opacity: 1, duration: .6, ease: 'power1.out' }, 4.4)
-    .to(O, { gSettle: 1, duration: 1.15, ease: 'none' }, 3.9)                            // green glides to the top-left corner
-    .to(O, { splash: 1, duration: .85, ease: 'power1.inOut' }, 4.75)                     // purple splashes back as droplets...
-    .to(O, { pPop: 1, duration: .9, ease: 'elastic.out(1, .45)' }, 5.05)                 // ...that gather into its dot at the bottom-right corner
-    .to(lts, { yPercent: 0, duration: 1.0, stagger: .028 }, 4.55)
-    .to(navEl, { autoAlpha: 1, y: 0, duration: .9 }, 4.9)
-    .to(soft, { autoAlpha: 1, y: 0, duration: .9, stagger: .1 }, 5.05)
-    .set(card, { clearProps: 'left,top,width,height,borderRadius,backgroundColor' }, 5.0)
-    .set(vid, { clearProps: 'opacity' }, 5.05)
-    .set(O, { intro: 1 }, 5.0);
-  function done() { S.intro = true; Object.assign(O, { intro: 1, hand: 1, gSettle: 1, pPop: 1, splash: 1 }); if (LP.introCv) { LP.introCv.remove(); LP.introCv = null; } if (LP.lenis) LP.lenis.start(); }
+  const paint = () => { if (LP.introCv) cv.draw(O); };
+  G.set(card, { autoAlpha: 0 }); G.set(navEl, { autoAlpha: 0, y: -14 }); G.set(cue, { autoAlpha: 0, y: 14 });
+  const tl = G.timeline({ defaults: { ease: 'power3.inOut' }, onUpdate: paint, onComplete: done });
+  tl.to(O, { popT: 1, duration: .6, ease: 'back.out(1.7)' }, .1)                         // the two dots pop in, side by side
+    .to(O, { popO: 1, duration: .6, ease: 'back.out(1.7)' }, .2)
+    .to(O, { jO: 1, duration: .28, ease: 'power2.out' }, .55)                            // jelly: purple stretches up into a pill...
+    .to(O, { jO: 0, duration: .8, ease: 'elastic.out(1, .6)' }, .83)                     // ...and settles with one soft overshoot
+    .to(O, { jT: 1, duration: .28, ease: 'power2.out' }, .67)                            // green answers
+    .to(O, { jT: 0, duration: .75, ease: 'elastic.out(1, .6)' }, .95)
+    /* pendulum: the circles' radii carry their own easing (see draw), so these clocks run steady */
+    .to(O, { aR: 1, duration: .8, ease: 'none' }, 1.72)                                  // purple blooms right, cutting green in half
+    .to(O, { bX: 1, duration: .38, ease: 'sine.in' }, 2.52)                              // it swings back in, gathering speed into the line...
+    .to(O, { cX: 1, duration: .36, ease: 'sine.out' }, 2.9)                              // ...and green swings out of it to the left
+    .to(O, { dR: 1, duration: .8, ease: 'none' }, 3.26)                                  // green gathers back into its dot
+    .to(O, { fl: 1, duration: .95, ease: 'none' }, 4.1)                                  // purple floods the whole screen, green is a hole in it
+    .to(O, { back: 1, duration: .38, ease: 'power3.out' }, 4.88)                         // ...which refills with green from its centre
+    .set(card, { autoAlpha: 1 }, 5.06)                                                   // the video is ready underneath, fully covered
+    .call(() => LP.vid && LP.vid.restart(), null, 5.06)
+    .set(O, { hand: 1 }, 5.28)                                                           // the DOM dots take over, above the canvas
+    .to(O, { rc: 1, duration: 1.15, ease: 'none' }, 5.28)                                // purple gathers into its dot at the bottom-right corner, uncovering the video
+    .to(O, { gSettle: 1, duration: 1.15, ease: 'none' }, 5.28)                           // green glides to the top-left corner
+    .add(() => { O.pPop = 1; if (LP.introCv) { LP.introCv.remove(); LP.introCv = null; } }, 6.43)
+    .to(O, { pSq: .08, duration: .12, ease: 'sine.out' }, 6.43)                          // a soft touch-down
+    .to(O, { pSq: 0, duration: .6, ease: 'elastic.out(1, .55)' }, 6.55)
+    .to(navEl, { autoAlpha: 1, y: 0, duration: .9, ease: 'expo.out' }, 5.9)
+    .to(cue, { autoAlpha: 1, y: 0, duration: .9, ease: 'expo.out' }, 6.15)
+    .set(O, { intro: 1 }, 6.43);
+  function done() {
+    S.intro = true; Object.assign(O, { intro: 1, hand: 1, rc: 1, gSettle: 1, pPop: 1, pSq: 0 });
+    if (LP.introCv) { LP.introCv.remove(); LP.introCv = null; }
+    G.set(card, { autoAlpha: 1 });
+    if (LP.lenis) LP.lenis.start();
+  }
   if (LP.lenis) LP.lenis.stop();
-  const skip = () => { if (tl.progress() < 1) tl.progress(1); };
+  const skip = () => { if (tl.progress() < 1) { tl.progress(1); done(); } };
   ['wheel', 'touchstart', 'keydown'].forEach(ev => on(window, ev, skip, { passive: true }));
   on(hero, 'pointerdown', skip);
   paint();
   LP.introTL = tl;
 }
 
-function zoom(G, ST) {
-  const hero = $('#lpHero'), card = $('#lpCard'), txt = $$('.lp-h1 .l1, .lp-h1 .l2, .lp-side, .lp-cue', hero);
-  const tl = G.timeline({
-    defaults: { ease: 'none' },
-    scrollTrigger: {
-      trigger: hero, start: () => `top ${protoOff()}px`, end: () => '+=' + Math.round(innerHeight * 2.2), pin: true, scrub: .7, invalidateOnRefresh: true,
-      onUpdate: s => { LP.zoomP = s.progress; heroTone(); },
-    },
-  });
-  tl.to(txt, { autoAlpha: 0, y: -50, duration: .22 }, 0)
-    .to(card, { width: () => hero.clientWidth, height: () => hero.clientHeight, top: '50%', '--rot': 0, borderRadius: 0, duration: .55, ease: 'power2.inOut' }, .04)
-    .to({}, { duration: .42 });
-  LP.zoomST = tl.scrollTrigger;
-  /* the dots fly down with the scroll and become the chooser circles */
+/* the dots fly down with the scroll and become the chooser circles */
+function scrollFX(ST) {
   LP.chooseST = ST.create({ trigger: '#lpChoose', start: 'top bottom', end: () => `top ${protoOff() + 1}px`, invalidateOnRefresh: true });
 }
 
-/* while the video fills the screen, the hero takes the tone of the video's current background */
+/* the hero takes the tone of the video's current background (green or white scenes) */
 function heroTone() {
   const hero = LP.root && $('#lpHero', LP.root); if (!hero) return;
-  const dark = (LP.zoomP || 0) > .5 && (!LP.vid || LP.vid.bgDark());   // only once the video covers the area under the nav
+  const dark = !LP.vid || LP.vid.bgDark();
   if ((hero.dataset.tone === 'dark') !== dark) { hero.dataset.tone = dark ? 'dark' : 'light'; tone(); }
 }
 
@@ -444,8 +431,82 @@ function tone() {
   const r = navEl.getBoundingClientRect(), y = r.top + r.height / 2;
   const hit = document.elementsFromPoint(innerWidth / 2, y).find(e => !e.closest('.lp-nav') && e.closest('[data-tone]'));
   navEl.dataset.tone = hit ? hit.closest('[data-tone]').dataset.tone : 'light';
-  const heroEnd = LP.zoomST ? LP.zoomST.end - 4 : ($('#lpHero') ? $('#lpHero').offsetHeight * .8 : innerHeight);
-  navEl.classList.toggle('has-logo', scrollY > heroEnd);
+}
+
+/* =====================================================================
+   Menu: a few destinations as dots. It opens as a circle from the Menu
+   button; a picked dot floods the screen in its colour and the page
+   opens through it.
+   ===================================================================== */
+function menuItems() {
+  const org = S.aud === 'org';
+  return [
+    ['site/events', 'Events', 't'],
+    ['site/traders', 'Traders', 'o'],
+    [org ? 'site/how-it-works-organiser' : 'site/how-it-works-trader', 'How it works', 't'],
+    [org ? 'site/pricing-organiser' : 'site/pricing-trader', 'Pricing', 'o'],
+    ['site/about', 'About', 't'],
+  ];
+}
+function openMenu(btn) {
+  if (!LP.alive || $('.lp-menu-ov')) return;
+  const G = window.gsap, motion = LP.motion;
+  const r = btn.getBoundingClientRect(), ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+  const ov = document.createElement('div');
+  ov.className = 'lp-menu-ov'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Menu');
+  ov.innerHTML = `<button type="button" class="lp-mclose" data-act="lp_menu_close" aria-label="Close menu"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <p class="lp-meye mono">Menu</p>
+    <nav class="lp-mdots" aria-label="Main">${menuItems().map(([p, l, c], i) => `<button type="button" class="lp-mdot ${c}" data-act="lp_menu_go" data-path="${p}" style="--i:${i}"><span class="mi"><span class="mono">0${i + 1}</span><b>${l}</b></span></button>`).join('')}</nav>
+    <div class="lp-mfoot"><button type="button" class="lp-pill" data-act="lp_menu_go" data-path="site/login">Log in</button><button type="button" class="lp-pill lp-cta" data-act="lp_menu_go" data-path="site/register">Get started</button></div>`;
+  ov.style.setProperty('--ox', ox + 'px'); ov.style.setProperty('--oy', oy + 'px');
+  LP.root.appendChild(ov);
+  LP.menu = { ov, btn, ox, oy };
+  if (LP.lenis) LP.lenis.stop();
+  const dots = $$('.lp-mdot', ov), bits = $$('.lp-meye, .lp-mfoot, .lp-mclose', ov);
+  const R = Math.hypot(Math.max(ox, innerWidth - ox), Math.max(oy, innerHeight - oy)) + 30;
+  if (motion) {
+    G.timeline()
+      .fromTo(ov, { clipPath: `circle(0px at ${ox}px ${oy}px)` }, { clipPath: `circle(${R}px at ${ox}px ${oy}px)`, duration: .75, ease: 'expo.inOut' })
+      .fromTo(dots, { scale: 0, rotate: -18 }, { scale: 1, rotate: 0, duration: .9, ease: 'back.out(1.6)', stagger: .07 }, .38)
+      .fromTo($$('.mi', ov), { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: .6, ease: 'expo.out', stagger: .07 }, .55)
+      .fromTo(bits, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'expo.out', stagger: .06 }, .6);
+  }
+  /* hover: the dot under the cursor grows and leans toward it, the others step back */
+  const st = dots.map(() => ({ x: 0, y: 0, tx: 0, ty: 0 }));
+  const move = e => dots.forEach((d, i) => { const b = d.getBoundingClientRect(), dx = e.clientX - (b.left + b.width / 2), dy = e.clientY - (b.top + b.height / 2), dist = Math.hypot(dx, dy), reach = b.width * .8, f = dist < reach ? 1 - dist / reach : 0; st[i].tx = dx * .16 * f; st[i].ty = dy * .16 * f; });
+  ov.addEventListener('pointermove', move);
+  ov.addEventListener('pointerleave', () => st.forEach(s => { s.tx = s.ty = 0; }));
+  const lean = () => dots.forEach((d, i) => { const s = st[i]; if (Math.abs(s.tx - s.x) + Math.abs(s.ty - s.y) < .05) return; s.x += (s.tx - s.x) * .14; s.y += (s.ty - s.y) * .14; d.style.setProperty('--mx', s.x.toFixed(2) + 'px'); d.style.setProperty('--my', s.y.toFixed(2) + 'px'); });
+  LP.loops.add(lean); LP.menu.lean = lean;
+  const key = e => { if (e.key === 'Escape') closeMenu(); };
+  document.addEventListener('keydown', key); LP.menu.key = key;
+  setTimeout(() => dots[0] && dots[0].focus({ preventScroll: true }), motion ? 500 : 0);
+}
+function closeMenu(instant) {
+  const m = LP.menu; if (!m) return;
+  LP.menu = null;
+  LP.loops.delete(m.lean); document.removeEventListener('keydown', m.key);
+  const done = () => { m.ov.remove(); if (LP.lenis) LP.lenis.start(); if (m.btn && document.contains(m.btn)) m.btn.focus({ preventScroll: true }); };
+  if (instant || !LP.motion) { done(); return; }
+  const R = Math.hypot(Math.max(m.ox, innerWidth - m.ox), Math.max(m.oy, innerHeight - m.oy)) + 30;
+  gsap.timeline({ onComplete: done })
+    .to($$('.lp-mdot', m.ov), { scale: 0, duration: .35, ease: 'power2.in', stagger: .04 })
+    .to($$('.lp-meye, .lp-mfoot, .lp-mclose', m.ov), { autoAlpha: 0, duration: .25 }, 0)
+    .fromTo(m.ov, { clipPath: `circle(${R}px at ${m.ox}px ${m.oy}px)` }, { clipPath: `circle(0px at ${m.ox}px ${m.oy}px)`, duration: .6, ease: 'expo.inOut' }, .2);
+}
+/* a picked dot floods the screen in its colour and the page opens through it */
+function menuGo(el) {
+  const path = el.dataset.path, m = LP.menu;
+  if (!m || !LP.motion) { closeMenu(true); N.go(path); return; }
+  const b = el.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2;
+  const colour = el.classList.contains('o') ? '#948FCF' : '#58A63B';
+  const w = document.createElement('div'); w.className = 'lp-pagewipe'; w.style.background = el.classList.contains('lp-mdot') ? colour : '#124734';
+  document.body.appendChild(w);
+  const R = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 30;
+  gsap.timeline()
+    .fromTo(w, { clipPath: `circle(${b.width / 2}px at ${x}px ${y}px)` }, { clipPath: `circle(${R}px at ${x}px ${y}px)`, duration: .7, ease: 'expo.in' })
+    .add(() => { closeMenu(true); N.go(path); })
+    .to(w, { autoAlpha: 0, duration: .45, ease: 'power1.out', onComplete: () => w.remove() }, '+=.05');
 }
 
 function chooserFX() {
@@ -548,7 +609,7 @@ function pickAud(k, from) {
 
 function setupLenis() {
   if (!window.Lenis) return;
-  const l = new Lenis({ lerp: .1, smoothWheel: true, prevent: node => !!(node && node.closest && node.closest('.mobile-menu,.modal,.drawer,.palpanel,[data-lenis-prevent]')) });
+  const l = new Lenis({ lerp: .1, smoothWheel: true, prevent: node => !!(node && node.closest && node.closest('.mobile-menu,.lp-menu-ov,.modal,.drawer,.palpanel,[data-lenis-prevent]')) });
   l.on('scroll', () => { ScrollTrigger.update(); });
   LP.tick = time => l.raf(time * 1000);
   gsap.ticker.add(LP.tick); gsap.ticker.lagSmoothing(0);
@@ -560,7 +621,7 @@ LP.init = root => {
   const G = window.gsap, ST = window.ScrollTrigger;
   LP.motion = hasG() && !N.reduce;
   LP.root.classList.toggle('lp-static', !LP.motion);
-  LP.O = { intro: 1, hand: 1, gSettle: 1, pPop: 1, splash: 1 };
+  LP.O = { intro: 1, hand: 1, rc: 1, gSettle: 1, pPop: 1, pSq: 0 };
   heroVideo();
   LP.dots = Dots();
   LP.loops.add(dt => { if (!document.hidden) LP.dots.frame(dt); });
@@ -568,17 +629,19 @@ LP.init = root => {
   if (LP.motion) {
     G.registerPlugin(ST);
     setupLenis();
-    LP.ctx = G.context(() => { zoom(G, ST); if (!S.intro) intro(G); }, LP.root);
+    LP.ctx = G.context(() => { scrollFX(ST); if (!S.intro) intro(G); }, LP.root);
     on(window, 'scroll', tone, { passive: true });
   } else on(window, 'scroll', tone, { passive: true });
   if (S.aud) audInit();
   loop();
+  heroTone();
   tone();
   if (LP.motion) { if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (LP.alive) ST.refresh(); }); }
 };
 LP.destroy = () => {
   LP.alive = false;
   cancelAnimationFrame(LP.raf);
+  if (LP.tickLoop) { gsap.ticker.remove(LP.tickLoop); LP.tickLoop = null; }
   if (LP.introTL) { LP.introTL.kill(); LP.introTL = null; S.intro = true; }
   killAud();
   LP.loops.clear();
@@ -587,9 +650,10 @@ LP.destroy = () => {
   if (LP.ctx) { LP.ctx.revert(); LP.ctx = null; }
   if (LP.tick) { gsap.ticker.remove(LP.tick); LP.tick = null; gsap.ticker.lagSmoothing(500, 33); }
   if (LP.lenis) { LP.lenis.destroy(); LP.lenis = null; }
-  $$('.lp-wipe').forEach(w => w.remove());
+  if (LP.menu) closeMenu(true);
+  $$('.lp-wipe, .lp-menu-ov').forEach(w => w.remove());
   if (LP.introCv) { LP.introCv.remove(); LP.introCv = null; }
-  LP.dots = null; LP.vid = null; LP.chooseST = null; LP.zoomST = null; LP.zoomP = 0;
+  LP.dots = null; LP.vid = null; LP.chooseST = null; LP.anchor = null;
 };
 N.lp = LP;
 
@@ -598,13 +662,16 @@ const baseRender = N.render;
 N.render = keep => { if (LP.alive) LP.destroy(); return baseRender(keep); };
 
 Object.assign(N.act, {
+  lp_menu(el) { openMenu(el); },
+  lp_menu_close() { closeMenu(); },
+  lp_menu_go(el) { menuGo(el); },
   lp_pick(el) { pickAud(el.dataset.aud, el.closest('.lp-seg') ? null : el); },
 });
 
 /* ---------- route: the new landing replaces site/home; the previous homepage stays at site/home-classic ---------- */
 const LANDING = {
   app: 'site', title: 'Home', bare: true,
-  render() { return `<div class="lp" id="lp" data-aud="${S.aud || ''}">${nav()}<div class="lp-fly" id="lpFly" aria-hidden="true"><i class="lp-dot t"></i><i class="lp-dot o"></i>${'<i class="lp-drop"></i>'.repeat(5)}</div>${hero()}${chooser()}<div class="lp-aud" id="lpAud" data-aud="${S.aud || ''}">${S.aud ? audHTML(S.aud) : ''}</div>${foot()}<div class="lp-cur" id="lpCur" aria-hidden="true"><span></span></div></div>`; },
+  render() { return `<div class="lp" id="lp" data-aud="${S.aud || ''}">${nav()}<div class="lp-fly" id="lpFly" aria-hidden="true"><i class="lp-dot t"></i><i class="lp-dot o"></i></div>${hero()}${chooser()}<div class="lp-aud" id="lpAud" data-aud="${S.aud || ''}">${S.aud ? audHTML(S.aud) : ''}</div>${foot()}<div class="lp-cur" id="lpCur" aria-hidden="true"><span></span></div></div>`; },
   after(root) { LP.init(root); },
 };
 const home = N.routes.find(r => r.pattern === 'site/home');
